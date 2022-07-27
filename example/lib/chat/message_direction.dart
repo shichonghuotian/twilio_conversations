@@ -1,0 +1,6 @@
+
+enum  MessageDirection {
+
+incoming,
+outgoing
+}
