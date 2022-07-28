@@ -56,17 +56,13 @@ class _MessageInputBarState extends State<MessageInputBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[400],
+      color: const Color(0xffF8F8F8),
       child:
         Column(
           children: [
             _buildMessageInputBar(),
             if(_isGalleryVisible) _buildMorePage()
-            // AnimatedContainer(
-            //   duration: Duration(milliseconds: 1000),
-            //   height: _isGalleryVisible ? 200 : null,
-            //   child:  _buildMorePage(),
-            // )
+
           ],
         )
 
@@ -103,7 +99,7 @@ class _MessageInputBarState extends State<MessageInputBar> {
     Widget _buildMessageInputBar() {
     return Padding(
 
-      padding: const EdgeInsets.only(top: 4, left: 8, bottom: 4),
+      padding: const EdgeInsets.only(top: 6, left: 8, bottom: 4),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -119,13 +115,15 @@ class _MessageInputBarState extends State<MessageInputBar> {
                 controller: messageInputTextController,
                 focusNode: _focusNode,
                 textCapitalization: TextCapitalization.sentences,
+                style: TextStyle(fontSize: 16, color: Colors.black),
                 minLines: 1,
                 maxLines: 6,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Type',
+                  hintStyle: TextStyle(fontSize: 16, color: Colors.black38),
                   contentPadding: EdgeInsets.only(
-                      left: 12.0, right: 12.0, bottom: 4, top: 0),
+                      left: 12.0, right: 12.0, bottom: 0, top: 0),
                 ),
               ),
             ),
@@ -145,7 +143,7 @@ class _MessageInputBarState extends State<MessageInputBar> {
       child: !_sendButtonVisible
           ? _buildMoreButton()
           : IconButton(
-        color: Colors.blue,
+        color: Colors.black,
         icon: Icon(Icons.send),
         onPressed:_handleSendPressed,
       ),
@@ -154,7 +152,7 @@ class _MessageInputBarState extends State<MessageInputBar> {
 
   Widget _buildMediaMessageButton() {
     return IconButton(
-      color: Colors.blue,
+      color: Colors.black,
       icon: Icon(Icons.add_photo_alternate_outlined),
       onPressed:_onGalleryPickerPressed,
     );
@@ -162,7 +160,7 @@ class _MessageInputBarState extends State<MessageInputBar> {
 
   Widget _buildVoiceMessageButton() {
     return IconButton(
-      color: Colors.blue,
+      color: Colors.black,
       icon: Icon(Icons.keyboard_voice),
       onPressed: () {
 
@@ -176,8 +174,8 @@ class _MessageInputBarState extends State<MessageInputBar> {
       turns: _isGalleryVisible ? pi  : 0,
       duration: const Duration(milliseconds: 100),
       child:  IconButton(
-        color: Colors.blue,
-        icon: Icon(Icons.add),
+        color: Colors.black,
+        icon: Icon(Icons.add_circle_outline),
         onPressed: () {
 
           _focusNode.unfocus();
@@ -194,8 +192,9 @@ class _MessageInputBarState extends State<MessageInputBar> {
   Widget _buildMorePage() {
 
     return AnimatedContainer(
-      duration: Duration(milliseconds: 1000),
-
+      duration: const Duration(milliseconds: 1000),
+      padding: const EdgeInsets.only(top: 30),
+      color: Colors.white,
       height: 200,
       child: GridView.count(
         crossAxisCount: 3,
@@ -203,16 +202,29 @@ class _MessageInputBarState extends State<MessageInputBar> {
         crossAxisSpacing: 20,
         childAspectRatio: 1,
         children: [
-          IconButton(
-            color: Colors.blue,
-            icon: Icon(Icons.add_photo_alternate_outlined),
+
+          TextButton(
+            child: Column(
+              children: [
+                Icon(Icons.add_photo_alternate_outlined, color: Colors.black,),
+                SizedBox(height: 12,),
+                Text("Photo", style: TextStyle(fontSize: 11, color: Colors
+                    .black45),)
+              ],
+            ),
             onPressed: _onGalleryPickerPressed,
           ),
-          IconButton(
-            color: Colors.blue,
-            icon: Icon(Icons.camera_alt_outlined),
+          TextButton(
+            child: Column(
+              children: [
+                Icon(Icons.camera_alt_outlined, color: Colors.black,),
+                SizedBox(height: 12,),
+                Text("Shot", style: TextStyle(fontSize: 11, color: Colors
+                    .black45),)
+              ],
+            ),
             onPressed: _onCameraPickerPressed,
-          )
+          ),
 
         ],
       ),

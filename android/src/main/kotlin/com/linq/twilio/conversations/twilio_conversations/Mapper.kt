@@ -107,7 +107,7 @@ object Mapper {
         result.messageBody = message.body
         result.conversationSid = message.conversation.sid
         result.participantSid = message.participantSid
-//        result.participant = participantToMap(message.participant)
+        result.participant = participantToPigeon(message.participant)
         result.messageIndex = message.messageIndex
         result.type = type.toString()
         result.media = mediaToPigeon(message)

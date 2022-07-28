@@ -282,6 +282,12 @@ static NSDictionary<NSString *, id> *wrapResult(id result, FlutterError *error) 
   if ((NSNull *)result.participantSid == [NSNull null]) {
     result.participantSid = nil;
   }
+    
+    result.participant = [TWCONParticipantData fromMap:dict[@"participant"]];
+    if ((NSNull *)result.participant == [NSNull null]) {
+      result.participant = nil;
+    }
+    
   result.dateCreated = dict[@"dateCreated"];
   if ((NSNull *)result.dateCreated == [NSNull null]) {
     result.dateCreated = nil;
@@ -301,7 +307,7 @@ static NSDictionary<NSString *, id> *wrapResult(id result, FlutterError *error) 
   return result;
 }
 - (NSDictionary *)toMap {
-  return [NSDictionary dictionaryWithObjectsAndKeys:(self.sid ? self.sid : [NSNull null]), @"sid", (self.messageIndex ? self.messageIndex : [NSNull null]), @"messageIndex", (self.author ? self.author : [NSNull null]), @"author", (self.subject ? self.subject : [NSNull null]), @"subject", (self.messageBody ? self.messageBody : [NSNull null]), @"messageBody", (self.type ? self.type : [NSNull null]), @"type", (self.hasMedia ? self.hasMedia : [NSNull null]), @"hasMedia", (self.media ? [self.media toMap] : [NSNull null]), @"media", (self.conversationSid ? self.conversationSid : [NSNull null]), @"conversationSid", (self.participantSid ? self.participantSid : [NSNull null]), @"participantSid", (self.dateCreated ? self.dateCreated : [NSNull null]), @"dateCreated", (self.dateUpdated ? self.dateUpdated : [NSNull null]), @"dateUpdated", (self.lastUpdatedBy ? self.lastUpdatedBy : [NSNull null]), @"lastUpdatedBy", (self.attributes ? [self.attributes toMap] : [NSNull null]), @"attributes", nil];
+    return [NSDictionary dictionaryWithObjectsAndKeys:(self.sid ? self.sid : [NSNull null]), @"sid", (self.messageIndex ? self.messageIndex : [NSNull null]), @"messageIndex", (self.author ? self.author : [NSNull null]), @"author", (self.subject ? self.subject : [NSNull null]), @"subject", (self.messageBody ? self.messageBody : [NSNull null]), @"messageBody", (self.type ? self.type : [NSNull null]), @"type", (self.hasMedia ? self.hasMedia : [NSNull null]), @"hasMedia", (self.media ? [self.media toMap] : [NSNull null]), @"media", (self.conversationSid ? self.conversationSid : [NSNull null]), @"conversationSid", (self.participantSid ? self.participantSid : [NSNull null]), @"participantSid", (self.dateCreated ? self.dateCreated : [NSNull null]), @"dateCreated", (self.dateUpdated ? self.dateUpdated : [NSNull null]), @"dateUpdated", (self.lastUpdatedBy ? self.lastUpdatedBy : [NSNull null]), @"lastUpdatedBy", (self.participant ? [self.participant toMap] : [NSNull null]), @"participant", (self.attributes ? [self.attributes toMap] : [NSNull null]), @"attributes", nil];
 }
 @end
 

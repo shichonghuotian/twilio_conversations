@@ -22,7 +22,7 @@ class MessageBubble extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          _buildAvatar(''),
+          _buildAvatar(message.avatar),
         ],
       );
     } else {
@@ -30,7 +30,7 @@ class MessageBubble extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildAvatar(''),
+          _buildAvatar(message.avatar),
           SizedBox(
             width: 10,
           ),
@@ -44,7 +44,7 @@ class MessageBubble extends StatelessWidget {
   Widget _buildAvatar(String? url) {
     return ClipOval(
       child: Image.network(
-        'https://pic2.zhimg.com/v2-639b49f2f6578eabddc458b84eb3c6a1.jpg',
+        url ?? '',
         width: 28,
         height: 28,
         fit: BoxFit.cover,
@@ -58,7 +58,7 @@ class MessageBubble extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 8,
+          height: isMyMessage ? 0 : 8,
         ),
         //如果不是自己发的消息， 显示name
         if (!isMyMessage)
@@ -94,7 +94,7 @@ class MessageBubble extends StatelessWidget {
       padding: EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 12),
       constraints: BoxConstraints(maxWidth: 250, minHeight: 35),
       child: Text(message.body ?? '',
-          style: const TextStyle(fontSize: 12, color: Colors.black)),
+          style: const TextStyle(fontSize: 16, color: Colors.black)),
       decoration: BoxDecoration(
           //背景
           color: color,
@@ -138,7 +138,10 @@ class MessageData2 {
   final bool isMyMessage;
 
   final String? imagePath;
+  final String? avatar;
+
 
   MessageData2(
-      this.body, this.type, this.author, this.isMyMessage, this.imagePath);
+      this.body, this.type, this.author, this.isMyMessage, this.imagePath,
+  this.avatar);
 }

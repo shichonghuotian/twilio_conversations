@@ -175,6 +175,7 @@ class MessageData {
   MessageMediaData? media;
   String? conversationSid;
   String? participantSid;
+  ParticipantData? participant;
   String? dateCreated;
   String? dateUpdated;
   String? lastUpdatedBy;
@@ -192,6 +193,7 @@ class MessageData {
     pigeonMap['media'] = media == null ? null : media!.encode();
     pigeonMap['conversationSid'] = conversationSid;
     pigeonMap['participantSid'] = participantSid;
+    pigeonMap['participant'] = participant == null ? null : participant!.encode();
     pigeonMap['dateCreated'] = dateCreated;
     pigeonMap['dateUpdated'] = dateUpdated;
     pigeonMap['lastUpdatedBy'] = lastUpdatedBy;
@@ -214,6 +216,8 @@ class MessageData {
           : null
       ..conversationSid = pigeonMap['conversationSid'] as String?
       ..participantSid = pigeonMap['participantSid'] as String?
+      ..participant = pigeonMap['participant'] != null ? ParticipantData
+          .decode(pigeonMap['participant']!) : null
       ..dateCreated = pigeonMap['dateCreated'] as String?
       ..dateUpdated = pigeonMap['dateUpdated'] as String?
       ..lastUpdatedBy = pigeonMap['lastUpdatedBy'] as String?

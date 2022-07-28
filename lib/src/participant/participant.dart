@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/services.dart';
 import 'package:twilio_conversations/api.dart';
@@ -26,6 +28,12 @@ class Participant {
   String? _lastReadTimestamp;
   String? get lastReadTimestamp => _lastReadTimestamp;
 
+  String? _userName;
+  String? _avatarUrl;
+  String? get userName => _userName;
+  String? get avatarUrl => _avatarUrl;
+
+
   Participant(
     this.sid,
     this.type,
@@ -53,6 +61,12 @@ class Participant {
       map['lastReadMessageIndex'],
       map['lastReadTimestamp'],
     );
+    if(participant.attributes != null && participant.attributes.data != null) {
+      Map<String,dynamic> userMap = json.decode(participant.attributes.data!);
+      participant._userName = userMap['name'];
+      participant._avatarUrl = userMap['avatar'];
+    }
+
     return participant;
   }
 
@@ -97,5 +111,10 @@ class Participant {
     } on PlatformException catch (err) {
       throw TwilioConversations.convertException(err);
     }
+  }
+
+  @override
+  String toString() {
+    return 'Participant{_attributes: $_attributes, _identity: $_identity}';
   }
 }

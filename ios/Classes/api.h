@@ -81,6 +81,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, nullable) NSString * dateUpdated;
 @property(nonatomic, copy, nullable) NSString * lastUpdatedBy;
 @property(nonatomic, strong, nullable) TWCONAttributesData * attributes;
+@property(nonatomic, strong, nullable) TWCONParticipantData * participant;
+
+
 @end
 
 @interface TWCONMessageOptionsData : NSObject

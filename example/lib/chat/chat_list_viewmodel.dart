@@ -118,22 +118,24 @@ class ChatListViewModel extends ChangeNotifier {
 
 
   Future<MessageData2> _messageToData(Message message) async {
+    print("message: ${message.participant?.attributes.data}");
     final isMyMessage =
         message.author == TwilioConversations.conversationClient?.myIdentity;
     if(message.type == MessageType.TEXT) {
       return  MessageData2(message.body ?? '', message.type, message
-          .author,
+          .participant?.userName ?? message.author,
           isMyMessage,
-          null);
+          null, message.participant?.avatarUrl);
     }else {
 
       var media = await _getMedia(message) ;
 
       print("media: $media");
-      return  MessageData2(message.body ?? '', message.type, message
-          .author,
+      return  MessageData2(message.body ?? '', message.type,
+          message.participant?.userName ?? message.author,
           isMyMessage,
-          media ?? '');
+          media ?? ''
+          ,message.participant?.avatarUrl);
     }
   }
 

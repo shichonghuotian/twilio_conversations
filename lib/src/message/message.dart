@@ -15,7 +15,7 @@ class Message {
   final String conversationSid;
   final String? participantSid;
   //TODO: review including Participant - as we are not maintaining a collection of them at the dart layer that we would want to update, simply constructing one may be sufficient. This should continue to remain the case so long as we are not distributing events via a Participant instance
-  // final Participant? participant;
+  final Participant? participant;
   final DateTime? dateCreated;
   final DateTime? dateUpdated;
   final String? lastUpdatedBy;
@@ -31,7 +31,7 @@ class Message {
     this.subject,
     this.body,
     this.participantSid,
-    // this.participant, // TODO: maybe include
+    this.participant, // TODO: maybe include
     this.messageIndex,
     this.type,
     this.hasMedia,
@@ -51,6 +51,7 @@ class Message {
       map['subject'],
       map['messageBody'],
       map['participantSid'],
+      map['participant'] != null ? Participant.fromMap(map['participant'].cast<String, dynamic>()) : null,
       map['messageIndex'],
       EnumToString.fromString(MessageType.values, map['type']) ??
           MessageType.TEXT,
@@ -61,6 +62,7 @@ class Message {
       map['attributes'] != null
           ? Attributes.fromMap(map['attributes'].cast<String, dynamic>())
           : Attributes(AttributesType.NULL, null),
+
     );
 
     return message;
@@ -133,6 +135,14 @@ class Message {
       throw TwilioConversations.convertException(err);
     }
   }
-  //TODO: implement getAggregatedDeliveryReceipt
+
+  @override
+  String toString() {
+    return 'Message{sid: $sid, author: $author, participant: $participant}';
+  }
+//TODO: implement getAggregatedDeliveryReceipt
   //TODO: implement getDetailedDeliveryReceiptList
+
+
+
 }

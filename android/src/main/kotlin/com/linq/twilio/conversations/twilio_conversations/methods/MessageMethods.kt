@@ -7,6 +7,7 @@ import com.twilio.conversations.ErrorInfo
 import com.twilio.conversations.Message
 import com.twilio.conversations.StatusListener
 import com.linq.twilio.conversations.twilio_conversations.Mapper
+import com.linq.twilio.conversations.twilio_conversations.Mapper.firstMedia
 import com.linq.twilio.conversations.twilio_conversations.Mapper.hasMedia
 import com.linq.twilio.conversations.twilio_conversations.TwilioConversationsPlugin
 import com.linq.twilio.conversations.twilio_conversations.exceptions.ClientNotInitializedException
@@ -35,17 +36,25 @@ class MessageMethods : Api.MessageApi {
                             //这里没有完成需要修改
                             result.success("")
                         }
-//                        message.getMediaContentTemporaryUrl(object : CallbackListener<String> {
-//                            override fun onSuccess(url: String) {
-//                                debug("getMediaContentTemporaryUrl => onSuccess $url")
-//                                result.success(url)
-//                            }
-//
-//                            override fun onError(errorInfo: ErrorInfo) {
-//                                debug("getMediaContentTemporaryUrl => onError: $errorInfo")
-//                                result.error(TwilioException(errorInfo.code, errorInfo.message))
-//                            }
-//                        })
+
+                        val media = message.firstMedia
+                        if (media != null) {
+                            media.getTemporaryContentUrl(object : CallbackListener<String> {
+                            override fun onSuccess(url: String) {
+                                debug("getMediaContentTemporaryUrl => onSuccess $url")
+                                result.success(url)
+                            }
+
+                            override fun onError(errorInfo: ErrorInfo) {
+                                debug("getMediaContentTemporaryUrl => onError: $errorInfo")
+                                result.error(TwilioException(errorInfo.code, errorInfo.message))
+                            }
+                        })
+
+                        }else {
+                            result.error(TwilioException(100, "Media is null"))
+                        }
+
                     }
 
                     override fun onError(errorInfo: ErrorInfo) {

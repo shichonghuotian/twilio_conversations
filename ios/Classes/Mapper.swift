@@ -51,6 +51,7 @@ public class Mapper {
     }
 
     public static func messageToPigeon(_ message: TCHMessage, conversationSid: String?) -> TWCONMessageData {
+        
         let result = TWCONMessageData()
         result.sid = message.sid
         result.author = message.author
@@ -60,7 +61,7 @@ public class Mapper {
         result.messageBody = message.body
         result.conversationSid = conversationSid
         result.participantSid = message.participantSid
-//        result.participant = participantToDict(message.participant, conversationSid: conversationSid)
+        result.participant = participantToPigeon(message.participant, conversationSid: conversationSid)
         result.messageIndex = message.index
         result.type = messageTypeToString(message.messageType)
         result.hasMedia = NSNumber(value: message.hasMedia())

@@ -318,6 +318,16 @@ public class Api {
     public String getParticipantSid() { return participantSid; }
     public void setParticipantSid(String setterArg) { this.participantSid = setterArg; }
 
+    private ParticipantData participant;
+
+    public ParticipantData getParticipant() {
+      return participant;
+    }
+
+    public void setParticipant(ParticipantData setterArg) {
+      this.participant = setterArg;
+    }
+
     private String dateCreated;
     public String getDateCreated() { return dateCreated; }
     public void setDateCreated(String setterArg) { this.dateCreated = setterArg; }
@@ -350,6 +360,7 @@ public class Api {
       toMapResult.put("dateUpdated", dateUpdated);
       toMapResult.put("lastUpdatedBy", lastUpdatedBy);
       toMapResult.put("attributes", (attributes == null) ? null : attributes.toMap());
+      toMapResult.put("participant", (participant == null) ? null : participant.toMap());
       return toMapResult;
     }
     static MessageData fromMap(Map<String, Object> map) {
@@ -374,6 +385,10 @@ public class Api {
       fromMapResult.conversationSid = (String)conversationSid;
       Object participantSid = map.get("participantSid");
       fromMapResult.participantSid = (String)participantSid;
+      Object participant = map.get("participant");
+      fromMapResult.participant = ParticipantData.fromMap((Map)participant);
+
+
       Object dateCreated = map.get("dateCreated");
       fromMapResult.dateCreated = (String)dateCreated;
       Object dateUpdated = map.get("dateUpdated");

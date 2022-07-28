@@ -125,7 +125,7 @@ class ChatListState extends State<ChatList> {
                 child: GestureDetector(
                   onTap: () {},
                   child: Container(
-                    color: Colors.grey[100],
+                    color: Colors.white,
                     child: _buildList(),
                   ),
                 )),
@@ -157,18 +157,31 @@ class ChatListState extends State<ChatList> {
           slivers: [
             SliverToBoxAdapter(
               child: Container(
-                height: 0,
-                color: Colors.red,
+                height: 50,
+                color: Colors.white,
+                child: Text('header'),
               ),
             ),
-            SliverList(
 
-              delegate: SliverChildBuilderDelegate((context, index) {
-                var message = chatvm.chatMessages[index];
+            SliverToBoxAdapter(
+              child: Container(
+                height: 10,
+                color: const Color(0xffFAFAFA),
+              ),
+            ),
 
-                return _buildMessage(message);
-              }, childCount: chatvm.chatMessages.length),
+            SliverPadding(
+              padding: EdgeInsets.only(bottom: 20),
+              sliver:  SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  var message = chatvm.chatMessages[index];
+
+                  return _buildMessage(message);
+                }, childCount: chatvm.chatMessages.length),
+              ),
             )
+
+
           ],
         );
       },
@@ -199,7 +212,7 @@ class ChatListState extends State<ChatList> {
 
   Widget _buildMessage(MessageData2 message) {
     return Container(
-      margin: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+      margin: EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 0),
       child: MessageBubble(
         message: message,
       ),
