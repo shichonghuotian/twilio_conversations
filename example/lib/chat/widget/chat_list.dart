@@ -3,17 +3,20 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twilio_conversations/twilio_conversations.dart';
-import 'package:twilio_conversations_example/chat/chat_list_viewmodel.dart';
+import 'package:twilio_conversations_example/chat/data/chat_list_viewmodel.dart';
+import 'package:twilio_conversations_example/chat/data/message_item_data.dart';
+import 'package:twilio_conversations_example/chat/widget/message_bubble.dart';
 
-import 'message_bubble.dart';
 import 'message_input_bar.dart';
 
 class ChatList extends StatefulWidget {
   final String conversationSidOrUniqueName;
 
-  const ChatList({Key? key, required this.conversationSidOrUniqueName}) : super(key: key);
+  final List<Widget>? header;
 
-
+  const ChatList({Key? key, required this.conversationSidOrUniqueName, this.header
+  }) :
+        super(key: key);
   @override
   State<StatefulWidget> createState() => ChatListState();
 }
@@ -24,24 +27,13 @@ class ChatListState extends State<ChatList> {
   late ScrollController _scrollController;
 
   late  ChatListViewModel _chatListViewModel;
+
   @override
   void initState() {
     super.initState();
     _scrollController =  ScrollController();
-
     _chatListViewModel = ChatListViewModel(widget.conversationSidOrUniqueName);
-
      _chatListViewModel.init();
-    //
-    //
-    //
-    // for(int i=0; i< 10; i++) {
-    //
-    //   _chatMessages.add(getRandomMessage(i));
-    //
-    //   //自动滚动到底部
-    // }
-
   }
 
   @override
@@ -50,9 +42,6 @@ class ChatListState extends State<ChatList> {
 
     // _calculateDiffs(oldWidget.items);
 
-    // //
-    // print("didUpdateWidget");
-    // _scrollToBottomIfNeeded();
   }
 
 
@@ -64,33 +53,8 @@ class ChatListState extends State<ChatList> {
     super.dispose();
   }
 
-  // MessageData2 getRandomMessage(int index) {
-  //   var ss = """ ${index}
-  //   aaaaaaaabbbbbbccccccdddddeeeeeeaaaaaaaabbbbbbccccccdddddeeeeee
-  //   aaaaaaaabbbbbbccccccdddddeeeeeeaaaaaaaabbbbbbccccccdddddeeeeee
-  //   """;
-  //   var random = Random();
-  //
-  //   bool isMy = random.nextBool();
-  //
-  //   bool tt = random.nextBool();
-  //   MessageType type = tt ? MessageType.TEXT : MessageType.MEDIA;
-  //
-  //   var imagepath = tt ? null : 'https://pic2.zhimg'
-  //       '.com/v2-639b49f2f6578eabddc458b84eb3c6a1.jpg';
-  //
-  //   return MessageData2(ss, type, "author", isMy, imagepath);
-  //
-  // }
 
   _sendNewMessage(String text) {
-    // var msg =  MessageData2(text, MessageType.TEXT, "author", true, null);
-    // setState(() {
-    //   final temp = List<MessageData2>.of(_chatMessages);
-    //   temp.add(msg);
-    //   _chatMessages = temp;
-    // });
-
     _chatListViewModel.sendMessage(text);
 
     _scrollToBottomIfNeeded();
@@ -123,7 +87,16 @@ class ChatListState extends State<ChatList> {
           children: [
             Flexible(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            duration : Duration(milliseconds: 1000),
+                            backgroundColor: Colors.blue,
+                            content: Text( 'error')
+                        )
+                    );
+
+                  },
                   child: Container(
                     color: Colors.white,
                     child: _buildList(),
@@ -155,13 +128,8 @@ class ChatListState extends State<ChatList> {
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           scrollDirection: Axis.vertical,
           slivers: [
-            SliverToBoxAdapter(
-              child: Container(
-                height: 50,
-                color: Colors.white,
-                child: Text('header'),
-              ),
-            ),
+
+            ...?widget.header,
 
             SliverToBoxAdapter(
               child: Container(
@@ -210,7 +178,7 @@ class ChatListState extends State<ChatList> {
     // );
   }
 
-  Widget _buildMessage(MessageData2 message) {
+  Widget _buildMessage(MessageItemData message) {
     return Container(
       margin: EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 0),
       child: MessageBubble(

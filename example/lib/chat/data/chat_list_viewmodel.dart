@@ -5,9 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:twilio_conversations/twilio_conversations.dart';
-import 'package:twilio_conversations_example/chat/mgr/chat_plugin_manager.dart';
-
-import 'message_bubble.dart';
+import 'package:twilio_conversations_example/chat/data/message_item_data.dart';
 
 class ChatListViewModel extends ChangeNotifier {
 
@@ -20,7 +18,7 @@ class ChatListViewModel extends ChangeNotifier {
 
   final limit = 20;
   List<Message> messages = [];
-  List<MessageData2> chatMessages = [];
+  List<MessageItemData> chatMessages = [];
 
   final subscriptions = <StreamSubscription>[];
 
@@ -32,7 +30,7 @@ class ChatListViewModel extends ChangeNotifier {
   * 初始化
   * */
   init() async {
-
+    // Conversation is not yet initialized， 有个bug需要解决
     Conversation? conversation = await TwilioConversations
         .conversationClient?.getConversation(conversationSidOrUniqueName);
 
@@ -57,7 +55,7 @@ class ChatListViewModel extends ChangeNotifier {
       // print("onMessageAdded }}");
 
 
-      chatMessages.add(await _messageToData(message));
+      chatMessages.add(await MessageItemData.messageToData(message));
       final messageIndex = message.messageIndex;
       if (messageIndex != null) {
         conversation.advanceLastReadMessageIndex(messageIndex);
@@ -100,7 +98,7 @@ class ChatListViewModel extends ChangeNotifier {
     var v = Stream.fromIterable(messages)
       .asyncMap((message) async {
 
-        return _messageToData(message);
+        return MessageItemData.messageToData(message);
 
     }).toList();
 
@@ -117,33 +115,7 @@ class ChatListViewModel extends ChangeNotifier {
   }
 
 
-  Future<MessageData2> _messageToData(Message message) async {
-    print("message: ${message.participant?.attributes.data}");
-    final isMyMessage =
-        message.author == TwilioConversations.conversationClient?.myIdentity;
-    if(message.type == MessageType.TEXT) {
-      return  MessageData2(message.body ?? '', message.type, message
-          .participant?.userName ?? message.author,
-          isMyMessage,
-          null, message.participant?.avatarUrl);
-    }else {
 
-      var media = await _getMedia(message) ;
-
-      print("media: $media");
-      return  MessageData2(message.body ?? '', message.type,
-          message.participant?.userName ?? message.author,
-          isMyMessage,
-          media ?? ''
-          ,message.participant?.avatarUrl);
-    }
-  }
-
-  Future<String?> _getMedia(Message message) async {
-    print('_getMedia => message: ${message.sid}');
-    final url = await message.getMediaUrl();
-    return url;
-  }
 
   sendMessage(String text) async {
     print('send message: $text');

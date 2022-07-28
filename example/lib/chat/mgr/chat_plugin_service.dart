@@ -3,15 +3,15 @@
 * */
 import 'package:twilio_conversations/twilio_conversations.dart';
 
-class ChatPluginManager {
-  factory ChatPluginManager() {
-    _instance ??= ChatPluginManager._();
+class ChatPluginService {
+  factory ChatPluginService() {
+    _instance ??= ChatPluginService._();
     return _instance!;
   }
 
-  static ChatPluginManager? _instance;
+  static ChatPluginService? _instance;
 
-  ChatPluginManager._();
+  ChatPluginService._();
 
   final plugin = TwilioConversations();
 
@@ -19,9 +19,9 @@ class ChatPluginManager {
   // ConversationClient? get client => TwilioConversations.conversationClient;
 
   /*
-  * 初始化
+  * 初始化, 要有个错误处理， 譬如token过期
   * */
-  init() async {
+  connect() async {
     print("ChatPluginManager init");
 
     if(TwilioConversations.conversationClient != null) {

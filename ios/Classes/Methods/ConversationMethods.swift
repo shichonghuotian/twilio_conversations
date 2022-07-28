@@ -1449,7 +1449,7 @@ class ConversationMethods: NSObject, TWCONConversationApi {
                             FlutterError(
                                 code: "TwilioException",
                                 message: "\(result.error?.code)|Error retrieving last \(count) "
-                                    + "messages for conversation \(conversationSid)",
+                                    + "messages for conversation \(conversationSid), " + String(describing: result.error),
                                 details: nil))
                     }
                 })

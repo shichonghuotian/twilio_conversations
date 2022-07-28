@@ -1,6 +1,0 @@
-
-enum  MessageDirection {
-
-incoming,
-outgoing
-}

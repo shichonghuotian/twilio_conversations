@@ -3,19 +3,17 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twilio_conversations/twilio_conversations.dart';
-import 'package:twilio_conversations_example/chat/chat_list.dart';
-import 'package:twilio_conversations_example/chat/message_bubble.dart';
-import 'package:twilio_conversations_example/chat/message_input_bar.dart';
-import 'package:twilio_conversations_example/chat/mgr/chat_plugin_manager.dart';
+import 'package:twilio_conversations_example/chat/widget/chat_list.dart';
 import 'package:twilio_conversations_example/conversations/conversations_notifier.dart';
 import 'package:twilio_conversations_example/conversations/conversations_page.dart';
 
+import 'chat/mgr/chat_plugin_service.dart';
 import 'messages/messages_page.dart';
 // import 'package:twilio_conversations_example/services/backend_service.dart';
 
 // import 'models/twilio_chat_token_request.dart';
 
-final chatMgr = ChatPluginManager();
+final chatMgr = ChatPluginService();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -225,7 +223,7 @@ class HomeState extends State<Home> {
 
   initClient() async {
 
-    await chatMgr.init();
+    await chatMgr.connect();
 
     setState(() {
       isLoading = false;
@@ -243,7 +241,7 @@ class HomeState extends State<Home> {
 
         ElevatedButton(
           onPressed:  () async {
-            await chatMgr.init();
+            await chatMgr.connect();
           },
           child: Text('init Client'),
         ),
@@ -255,7 +253,18 @@ class HomeState extends State<Home> {
               MaterialPageRoute(
                 builder: (context) => Scaffold(
                   appBar: AppBar(),
-                  body: ChatList(conversationSidOrUniqueName: 'test11abc',),
+                  body: ChatList(
+                    conversationSidOrUniqueName: 'test11abc',
+                    header: [
+                      SliverToBoxAdapter(
+                        child: Container(
+                          height: 50,
+                          color: Colors.white,
+                          child: Text('header'),
+                        ),
+                      ),
+                    ],
+                  ),
 
                 ),
               ),

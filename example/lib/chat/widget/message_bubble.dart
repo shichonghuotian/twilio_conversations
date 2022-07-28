@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:twilio_conversations/twilio_conversations.dart';
-import 'package:twilio_conversations_example/chat/message_direction.dart';
+
+import '../data/message_item_data.dart';
 
 class MessageBubble extends StatelessWidget {
-  final MessageData2 message;
+  final MessageItemData message;
 
   const MessageBubble({Key? key, required this.message}) : super(key: key);
 
@@ -18,7 +19,7 @@ class MessageBubble extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildNameAndMessageContent(this.message, isMyMessage),
+          _buildNameAndMessageContent(context, this.message, isMyMessage),
           SizedBox(
             width: 10,
           ),
@@ -34,7 +35,7 @@ class MessageBubble extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          _buildNameAndMessageContent(this.message, isMyMessage),
+          _buildNameAndMessageContent(context, this.message, isMyMessage),
         ],
       );
     }
@@ -52,7 +53,8 @@ class MessageBubble extends StatelessWidget {
     );
   }
 
-  Widget _buildNameAndMessageContent(MessageData2 message, bool isMyMessage) {
+  Widget _buildNameAndMessageContent(
+      BuildContext context, MessageItemData message, bool isMyMessage) {
     String usrName = message.author ?? "";
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,21 +69,21 @@ class MessageBubble extends StatelessWidget {
         SizedBox(height: isMyMessage ? 0 : 8),
 
         //显示各种消息类型
-        _buildMessageContent(message)
+        _buildMessageContent(context, message)
       ],
     );
   }
 
-  Widget _buildMessageContent(MessageData2 message) {
+  Widget _buildMessageContent(BuildContext context, MessageItemData message) {
     switch (message.type) {
       case MessageType.TEXT:
         return _buildTextMessage(message);
       case MessageType.MEDIA:
-        return _buildImageMessage(message);
+        return _buildImageMessage(context, message);
     }
   }
 
-  Widget _buildTextMessage(MessageData2 message) {
+  Widget _buildTextMessage(MessageItemData message) {
     final color = message.isMyMessage ? Color(0xFF29A0F2) : Color(0xffEFF5FA);
     var radius = Radius.circular(8.0);
     final bRadius = message.isMyMessage
@@ -106,10 +108,12 @@ class MessageBubble extends StatelessWidget {
     );
   }
 
-  Widget _buildImageMessage(MessageData2 message) {
+  Widget _buildImageMessage(BuildContext context, MessageItemData message) {
     final color = message.isMyMessage ? Color(0xFF29A0F2) : Color(0xffEFF5FA);
 
-    var isHttp = message.imagePath?.startsWith('http') ?? true;
+    final url = message.imagePath;
+
+    final tag = url ?? "image";
 
     return Container(
       constraints: BoxConstraints(maxWidth: 150, minHeight: 35, minWidth: 100),
@@ -122,26 +126,57 @@ class MessageBubble extends StatelessWidget {
         //设置四周边框
         // border: Border.all(width: 0.5, color: borderColor ?? const Color(0xFFECECEC)),
       ),
-      child: isHttp
-          ? Image.network(message.imagePath!)
-          : Image.file(File(message.imagePath!)),
+      child: InkWell(
+        child: Hero(
+          tag: tag,
+          child: Image.network(url!),
+        ),
+        onTap: () {
+          Navigator.push(context, PageRouteBuilder(
+              pageBuilder: (ctx, animation, secondaryAnimation) {
+            return FadeTransition(
+              opacity: animation,
+              child: HeroLargeImagePage(
+                url: url,
+                heroTag: tag,
+              ),
+            );
+          }));
+        },
+      ),
     );
   }
 }
 
-class MessageData2 {
-  final String? body;
+class HeroLargeImagePage extends StatelessWidget {
+  final String? url;
+  final String heroTag;
 
-  final MessageType type;
-  final String? author;
+  const HeroLargeImagePage({
+    super.key,
+    this.url,
+    required this.heroTag,
+  });
 
-  final bool isMyMessage;
+  @override
+  Widget build(BuildContext context) {
+    return
+      GestureDetector(
+        onTap: () {
+            Navigator.pop(context);
+          },
+        child: Container(
+          color: Colors.black,
+          width: double.infinity,
+          height: double.infinity,
+          child: Center(
+              child: Hero(
+                tag: heroTag, //唯一标记，前后两个路由页Hero的tag必须相同
+                child: Image.network(url ?? ""),
+              ),
+            ),
+        ),
+      );
 
-  final String? imagePath;
-  final String? avatar;
-
-
-  MessageData2(
-      this.body, this.type, this.author, this.isMyMessage, this.imagePath,
-  this.avatar);
+  }
 }

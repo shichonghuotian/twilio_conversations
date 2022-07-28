@@ -153,7 +153,7 @@ class _MessageInputBarState extends State<MessageInputBar> {
   Widget _buildMediaMessageButton() {
     return IconButton(
       color: Colors.black,
-      icon: Icon(Icons.add_photo_alternate_outlined),
+      icon:Image.asset("assets/im_photo.png", width: 24,),
       onPressed:_onGalleryPickerPressed,
     );
   }
@@ -161,7 +161,7 @@ class _MessageInputBarState extends State<MessageInputBar> {
   Widget _buildVoiceMessageButton() {
     return IconButton(
       color: Colors.black,
-      icon: Icon(Icons.keyboard_voice),
+      icon:  Image.asset("assets/im_icon_voice.png", width: 22,),
       onPressed: () {
 
       },
@@ -175,7 +175,7 @@ class _MessageInputBarState extends State<MessageInputBar> {
       duration: const Duration(milliseconds: 100),
       child:  IconButton(
         color: Colors.black,
-        icon: Icon(Icons.add_circle_outline),
+        icon:  Image.asset("assets/im_icon_add.png", width: 24,),
         onPressed: () {
 
           _focusNode.unfocus();
@@ -206,7 +206,9 @@ class _MessageInputBarState extends State<MessageInputBar> {
           TextButton(
             child: Column(
               children: [
-                Icon(Icons.add_photo_alternate_outlined, color: Colors.black,),
+                Image.asset("assets/im_photo.png", width: 24,),
+
+                // Icon(Icons.add_photo_alternate_outlined, color: Colors.black,),
                 SizedBox(height: 12,),
                 Text("Photo", style: TextStyle(fontSize: 11, color: Colors
                     .black45),)
@@ -217,7 +219,8 @@ class _MessageInputBarState extends State<MessageInputBar> {
           TextButton(
             child: Column(
               children: [
-                Icon(Icons.camera_alt_outlined, color: Colors.black,),
+                Image.asset("assets/im_shot.png", width: 24,),
+                // Icon(Icons.camera_alt_outlined, color: Colors.black,),
                 SizedBox(height: 12,),
                 Text("Shot", style: TextStyle(fontSize: 11, color: Colors
                     .black45),)
