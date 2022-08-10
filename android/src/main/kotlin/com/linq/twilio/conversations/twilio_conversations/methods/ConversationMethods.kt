@@ -158,10 +158,10 @@ class ConversationMethods : Api.ConversationApi {
                        }
 
                        if (options.inputPath != null) {
+                           val input = options.inputPath as String
 
                            debug("sendMessage => add miedat ${input}")
 
-                           val input = options.inputPath as String
                            val mimeType = options.mimeType as String?
                                ?: return result.error(MissingParameterException("Missing 'mimeType' in MessageOptions"))
                           //忽略进度
@@ -177,7 +177,7 @@ class ConversationMethods : Api.ConversationApi {
 
                    }.send(object : CallbackListener<Message> {
                        override fun onSuccess(message: Message) {
-                           debug("sendMessage => onSuccess")
+                           debug("sendMessage => onSuccess: $message")
                            val messageData = Mapper.messageToPigeon(message)
                            result.success(messageData)
                        }

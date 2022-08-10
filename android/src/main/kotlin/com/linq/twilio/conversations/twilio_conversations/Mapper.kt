@@ -94,7 +94,7 @@ object Mapper {
 
         val media = message.firstMedia  // @todo: support multiple media
 
-        val type = if (media != null) MessageType.MEDIA.value else MessageType.TEXT.value
+        val type = if (media != null) "MEDIA" else "TEXT"
 
         val result = Api.MessageData()
 

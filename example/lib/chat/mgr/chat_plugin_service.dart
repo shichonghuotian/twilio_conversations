@@ -72,10 +72,10 @@ class ChatPluginService {
 
   Future<String> getNewToken() async {
 
-    var resp =  await http.get(Uri.parse('http://192.168.50'
-        '.213:8080/api/login?identity=usr00&password=123'));
+    // var resp =  await http.get(Uri.parse('http://192.168.50'
+    //     '.213:8080/api/login?identity=usr00&password=123'));
 
-    return resp.body;
+    return getToken();
 
   }
 
@@ -84,7 +84,7 @@ class ChatPluginService {
 
     //usr 00
     // String jwtToken = 'eyJjdHkiOiJ0d2lsaW8tZnBhO3Y9MSIsInR5cCI6IkpXVCIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2IiwiZXhwIjoxNjU5MDIwMjEzLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ1c3IwMCIsImNoYXQiOnsic2VydmljZV9zaWQiOiJJU2M3Mzg5MTgyNDc4NjQzZDBhOGE2MjU5ODI5NDNjNjYzIn19LCJqdGkiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2LTE2NTg5MzM4ODgiLCJzdWIiOiJBQzgyN2Q0ZWJiZjgzZjYzNTkwNzQzMWU5MDk0MmI1YjQ0In0.x_NDOxNfHYhLLpOVnTw0j-jcjgOFhyjLtAnPKqHoYgI';
-    String jwtToken = 'eyJjdHkiOiJ0d2lsaW8tZnBhO3Y9MSIsInR5cCI6IkpXVCIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2IiwiZXhwIjoxNjU5NDIzODIyLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ1c3IwMCIsImNoYXQiOnsic2VydmljZV9zaWQiOiJJU2M3Mzg5MTgyNDc4NjQzZDBhOGE2MjU5ODI5NDNjNjYzIn19LCJqdGkiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2LTE2NTk0MjM3NDQiLCJzdWIiOiJBQzgyN2Q0ZWJiZjgzZjYzNTkwNzQzMWU5MDk0MmI1YjQ0In0.BCDqZd4bfKaVY9X-K8ZZ6lUkNC7QMERIPRkt-kBUyJY';
+    String jwtToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2I2NGUxZTJiNzE0NDViOWE3ZGRiMTlmY2ZmOTNiZDU2LTE2NjAxMjk0NjQiLCJncmFudHMiOnsiY2hhdCI6eyJzZXJ2aWNlX3NpZCI6IklTYWUzMDQzYjhmNTI0NGM3YmI0NmUxMGY4Y2U4ZDVkYWEifSwiaWRlbnRpdHkiOjl9LCJpc3MiOiJTS2I2NGUxZTJiNzE0NDViOWE3ZGRiMTlmY2ZmOTNiZDU2IiwiZXhwIjoxNjYwMjE1ODY0LCJuYmYiOjE2NjAxMjk0NjQsInN1YiI6IkFDOTk2MWYzMmVhODFmNWE2ZmZkNzA0YmFlODYyN2QzNzIifQ.gMkzCIdbHwaZ0-_nU9QfKkqvYk0tz9xUZTQHpH1I8d4';
 
     return jwtToken;
   }

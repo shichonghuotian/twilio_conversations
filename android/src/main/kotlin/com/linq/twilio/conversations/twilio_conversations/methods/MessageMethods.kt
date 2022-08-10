@@ -31,11 +31,11 @@ class MessageMethods : Api.MessageApi {
             override fun onSuccess(conversation: Conversation) {
                 conversation.getMessageByIndex(messageIndex, object : CallbackListener<Message> {
                     override fun onSuccess(message: Message) {
-                        message.getTemporaryContentUrlsForAttachedMedia {
-
-                            //这里没有完成需要修改
-                            result.success("")
-                        }
+//                        message.getTemporaryContentUrlsForAttachedMedia {
+//
+//                            //这里没有完成需要修改
+//                            result.success("")
+//                        }
 
                         val media = message.firstMedia
                         if (media != null) {
