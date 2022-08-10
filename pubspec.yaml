@@ -1,7 +1,7 @@
-name: twilio_conversations
+name: twilio_conversations_sw
 description: twilio conversations flutter sdk
 version: 0.0.3
-homepage:
+homepage: https://github.com/shichonghuotian/twilio_conversations
 
 environment:
   sdk: ">=2.17.1 <3.0.0"
