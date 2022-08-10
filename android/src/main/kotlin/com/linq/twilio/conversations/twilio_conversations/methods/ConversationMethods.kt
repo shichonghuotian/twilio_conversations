@@ -159,6 +159,8 @@ class ConversationMethods : Api.ConversationApi {
 
                        if (options.inputPath != null) {
 
+                           debug("sendMessage => add miedat ${input}")
+
                            val input = options.inputPath as String
                            val mimeType = options.mimeType as String?
                                ?: return result.error(MissingParameterException("Missing 'mimeType' in MessageOptions"))

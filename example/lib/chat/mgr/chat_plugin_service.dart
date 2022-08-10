@@ -1,7 +1,12 @@
 /*
 * 主要是用来初始化clien
 * */
+import 'dart:async';
+
+import 'package:flutter/services.dart';
 import 'package:twilio_conversations/twilio_conversations.dart';
+import 'package:http/http.dart' as http;
+
 
 class ChatPluginService {
   factory ChatPluginService() {
@@ -17,6 +22,7 @@ class ChatPluginService {
 
 
   // ConversationClient? get client => TwilioConversations.conversationClient;
+  final subscriptions = <StreamSubscription>[];
 
   /*
   * 初始化, 要有个错误处理， 譬如token过期
@@ -28,8 +34,35 @@ class ChatPluginService {
       return;
     }
 
-    await plugin.create(jwtToken: getToken());
+    try {
+       plugin.create(jwtToken: getToken());
+
+    } on PlatformException catch(e) {
+
+      print("error code: ${e.code}" );
+    }
     print("ChatPluginManager end");
+
+    var client = TwilioConversations.conversationClient!;
+    subscriptions.add(client.onTokenAboutToExpire.listen((message) {
+      print("onTokenAboutToExpire ");
+
+    }));
+    subscriptions.add(client.onTokenExpired.listen((message) async {
+      print("onTokenExpired ");
+
+      // client.updateToken();
+      var v = await getNewToken();
+
+      print("newToken: $v");
+      await client.updateToken(v);
+      print("updateToken success");
+
+    }));
+
+
+
+    // TwilioConversations.conversationClient
     //
     // Conversation? conversation = await TwilioConversations.conversationClient?.getConversation("test07abc");
     //
@@ -37,11 +70,21 @@ class ChatPluginService {
 
   }
 
+  Future<String> getNewToken() async {
+
+    var resp =  await http.get(Uri.parse('http://192.168.50'
+        '.213:8080/api/login?identity=usr00&password=123'));
+
+    return resp.body;
+
+  }
+
   String getToken() {
     // String jwtToken = "eyJjdHkiOiJ0d2lsaW8tZnBhO3Y9MSIsInR5cCI6IkpXVCIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2IiwiZXhwIjoxNjU4OTkwOTgxLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ1c3IwMSIsImNoYXQiOnsic2VydmljZV9zaWQiOiJJU2M3Mzg5MTgyNDc4NjQzZDBhOGE2MjU5ODI5NDNjNjYzIn19LCJqdGkiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2LTE2NTg5MDQ3MDQiLCJzdWIiOiJBQzgyN2Q0ZWJiZjgzZjYzNTkwNzQzMWU5MDk0MmI1YjQ0In0.ooT0oss9QTuz3SxXY-VtmXXFPSqywLmkyD3PWHmgFSU";
 
     //usr 00
-    String jwtToken = 'eyJjdHkiOiJ0d2lsaW8tZnBhO3Y9MSIsInR5cCI6IkpXVCIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2IiwiZXhwIjoxNjU5MDIwMjEzLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ1c3IwMCIsImNoYXQiOnsic2VydmljZV9zaWQiOiJJU2M3Mzg5MTgyNDc4NjQzZDBhOGE2MjU5ODI5NDNjNjYzIn19LCJqdGkiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2LTE2NTg5MzM4ODgiLCJzdWIiOiJBQzgyN2Q0ZWJiZjgzZjYzNTkwNzQzMWU5MDk0MmI1YjQ0In0.x_NDOxNfHYhLLpOVnTw0j-jcjgOFhyjLtAnPKqHoYgI';
+    // String jwtToken = 'eyJjdHkiOiJ0d2lsaW8tZnBhO3Y9MSIsInR5cCI6IkpXVCIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2IiwiZXhwIjoxNjU5MDIwMjEzLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ1c3IwMCIsImNoYXQiOnsic2VydmljZV9zaWQiOiJJU2M3Mzg5MTgyNDc4NjQzZDBhOGE2MjU5ODI5NDNjNjYzIn19LCJqdGkiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2LTE2NTg5MzM4ODgiLCJzdWIiOiJBQzgyN2Q0ZWJiZjgzZjYzNTkwNzQzMWU5MDk0MmI1YjQ0In0.x_NDOxNfHYhLLpOVnTw0j-jcjgOFhyjLtAnPKqHoYgI';
+    String jwtToken = 'eyJjdHkiOiJ0d2lsaW8tZnBhO3Y9MSIsInR5cCI6IkpXVCIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2IiwiZXhwIjoxNjU5NDIzODIyLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ1c3IwMCIsImNoYXQiOnsic2VydmljZV9zaWQiOiJJU2M3Mzg5MTgyNDc4NjQzZDBhOGE2MjU5ODI5NDNjNjYzIn19LCJqdGkiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2LTE2NTk0MjM3NDQiLCJzdWIiOiJBQzgyN2Q0ZWJiZjgzZjYzNTkwNzQzMWU5MDk0MmI1YjQ0In0.BCDqZd4bfKaVY9X-K8ZZ6lUkNC7QMERIPRkt-kBUyJY';
 
     return jwtToken;
   }
