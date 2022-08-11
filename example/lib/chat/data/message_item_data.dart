@@ -1,4 +1,4 @@
-import 'package:twilio_conversations/twilio_conversations.dart';
+import 'package:twilio_conversations_linq/twilio_conversations.dart';
 
 class MessageItemData {
   final Message? message;

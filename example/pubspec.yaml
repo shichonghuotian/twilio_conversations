@@ -18,7 +18,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  twilio_conversations:
+  twilio_conversations_linq:
     # When depending on this package from a real application you should use:
     #   twilio_conversations: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints

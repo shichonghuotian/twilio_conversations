@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:twilio_conversations/twilio_conversations.dart';
+import 'package:twilio_conversations_linq/twilio_conversations.dart';
 import 'package:twilio_conversations_example/chat/data/chat_list_viewmodel.dart';
 import 'package:twilio_conversations_example/chat/data/message_item_data.dart';
 import 'package:twilio_conversations_example/chat/widget/message_bubble.dart';

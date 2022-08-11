@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:twilio_conversations/twilio_conversations.dart';
+import 'package:twilio_conversations_linq/twilio_conversations.dart';
 
 import '../data/message_item_data.dart';
 

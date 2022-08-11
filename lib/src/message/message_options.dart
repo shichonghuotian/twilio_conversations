@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:twilio_conversations/api.dart';
-import 'package:twilio_conversations/twilio_conversations.dart';
+import 'package:twilio_conversations_linq/api.dart';
+import 'package:twilio_conversations_linq/twilio_conversations.dart';
 
 class MessageOptions {
   //#region Private API properties

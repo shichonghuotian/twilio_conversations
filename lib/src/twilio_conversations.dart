@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:twilio_conversations/api.dart';
-import 'package:twilio_conversations/twilio_conversations.dart';
+import 'package:twilio_conversations_linq/api.dart';
+import 'package:twilio_conversations_linq/twilio_conversations.dart';
 
 class TwilioConversations extends FlutterLoggingApi {
   factory TwilioConversations() {

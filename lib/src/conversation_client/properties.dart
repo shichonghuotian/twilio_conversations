@@ -1,5 +1,5 @@
-import 'package:twilio_conversations/api.dart';
-import 'package:twilio_conversations/src/conversation_client/conversation_client.dart';
+import 'package:twilio_conversations_linq/api.dart';
+import 'package:twilio_conversations_linq/src/conversation_client/conversation_client.dart';
 
 /// Represents options when connecting to a [ConversationClient].
 class Properties {

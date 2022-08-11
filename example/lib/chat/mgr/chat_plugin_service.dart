@@ -4,7 +4,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:twilio_conversations/twilio_conversations.dart';
+import 'package:twilio_conversations_linq/twilio_conversations.dart';
 import 'package:http/http.dart' as http;
 
 

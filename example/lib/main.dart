@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:twilio_conversations/twilio_conversations.dart';
+import 'package:twilio_conversations_linq/twilio_conversations.dart';
 import 'package:twilio_conversations_example/chat/widget/chat_list.dart';
 import 'package:twilio_conversations_example/conversations/conversations_notifier.dart';
 import 'package:twilio_conversations_example/conversations/conversations_page.dart';
 
 import 'chat/mgr/chat_plugin_service.dart';
 import 'messages/messages_page.dart';
-// import 'package:twilio_conversations_example/services/backend_service.dart';
+// import 'package:twilio_conversations_linq_example/services/backend_service.dart';
 
 // import 'models/twilio_chat_token_request.dart';
 
