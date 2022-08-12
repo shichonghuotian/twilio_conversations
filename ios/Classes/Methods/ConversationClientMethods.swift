@@ -9,7 +9,7 @@ class ConversationClientMethods: NSObject, TWCONConversationClientApi {
         _ conversationSidOrUniqueName: String?,
         completion: @escaping (TWCONConversationData?, FlutterError?) -> Void) {
         self.debug("getConversation => conversationSidOrUniqueName: \(String(describing: conversationSidOrUniqueName))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 nil,
                 FlutterError(
@@ -48,7 +48,7 @@ class ConversationClientMethods: NSObject, TWCONConversationClientApi {
     /// getMyConversations
     func getMyConversations(completion: @escaping ([TWCONConversationData]?, FlutterError?) -> Void) {
         self.debug("getMyConversations")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 nil,
                 FlutterError(
@@ -65,7 +65,7 @@ class ConversationClientMethods: NSObject, TWCONConversationClientApi {
     /// getMyUser
     func getMyUser(completion: @escaping (TWCONUserData?, FlutterError?) -> Void) {
         self.debug("getMyUser")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 nil,
                 FlutterError(
@@ -81,7 +81,7 @@ class ConversationClientMethods: NSObject, TWCONConversationClientApi {
     /// updateToken
     public func updateTokenToken(_ token: String?, completion: @escaping (FlutterError?) -> Void) {
         self.debug("updateToken")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 FlutterError(
                     code: "ClientNotInitializedException",
@@ -116,7 +116,7 @@ class ConversationClientMethods: NSObject, TWCONConversationClientApi {
     /// shutdown
     public func shutdownWithError(_ error: AutoreleasingUnsafeMutablePointer<FlutterError?>) {
         self.debug("shutdown")
-        SwiftTwilioConversationsPlugin.instance?.client?.shutdown()
+        SwiftTwilioConversationsLinqPlugin.instance?.client?.shutdown()
         disposeListeners()
     }
 
@@ -125,7 +125,7 @@ class ConversationClientMethods: NSObject, TWCONConversationClientApi {
         _ friendlyName: String?,
         completion: @escaping (TWCONConversationData?, FlutterError?) -> Void) {
         self.debug("createConversation => friendlyName: \(String(describing: friendlyName))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 nil,
                 FlutterError(
@@ -179,7 +179,7 @@ class ConversationClientMethods: NSObject, TWCONConversationClientApi {
                 if granted {
                     DispatchQueue.main.async {
                         self.debug("register => Requesting APNS token")
-                        SwiftTwilioConversationsPlugin.reasonForTokenRetrieval = "register"
+                        SwiftTwilioConversationsLinqPlugin.reasonForTokenRetrieval = "register"
                         UIApplication.shared.registerForRemoteNotifications()
                     }
                 }
@@ -195,7 +195,7 @@ class ConversationClientMethods: NSObject, TWCONConversationClientApi {
         if #available(iOS 10.0, *) {
             DispatchQueue.main.async {
                 self.debug("unregister => Requesting APNS token")
-                SwiftTwilioConversationsPlugin.reasonForTokenRetrieval = "deregister"
+                SwiftTwilioConversationsLinqPlugin.reasonForTokenRetrieval = "deregister"
                 UIApplication.shared.registerForRemoteNotifications()
             }
         }
@@ -203,11 +203,11 @@ class ConversationClientMethods: NSObject, TWCONConversationClientApi {
     }
 
     private func disposeListeners() {
-        SwiftTwilioConversationsPlugin.clientListener = nil
-        SwiftTwilioConversationsPlugin.conversationListeners.removeAll()
+        SwiftTwilioConversationsLinqPlugin.clientListener = nil
+        SwiftTwilioConversationsLinqPlugin.conversationListeners.removeAll()
     }
 
     private func debug(_ msg: String) {
-        SwiftTwilioConversationsPlugin.debug("\(TAG)::\(msg)")
+        SwiftTwilioConversationsLinqPlugin.debug("\(TAG)::\(msg)")
     }
 }

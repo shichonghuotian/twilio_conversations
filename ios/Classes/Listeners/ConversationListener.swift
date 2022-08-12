@@ -15,7 +15,7 @@ public class ConversationListener: NSObject, TCHConversationDelegate {
         conversation: TCHConversation,
         messageAdded message: TCHMessage) {
         debug("onMessageAdded => messageSid = \(String(describing: message.sid))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.messageAddedConversationSid(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.messageAddedConversationSid(
             conversationSid,
             messageData: Mapper.messageToPigeon(message, conversationSid: conversationSid),
             completion: { (error: Error?) in
@@ -34,7 +34,7 @@ public class ConversationListener: NSObject, TCHConversationDelegate {
         updated: TCHMessageUpdate) {
         debug("onMessageUpdated => messageSid = \(String(describing: message.sid)), " +
                 "updated = \(String(describing: updated))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.messageUpdatedConversationSid(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.messageUpdatedConversationSid(
             conversationSid,
             messageData: Mapper.messageToPigeon(message, conversationSid: conversationSid),
             reason: Mapper.messageUpdateToString(updated),
@@ -52,7 +52,7 @@ public class ConversationListener: NSObject, TCHConversationDelegate {
         conversation: TCHConversation,
         messageDeleted message: TCHMessage) {
         debug("onMessageDeleted => messageSid = \(String(describing: message.sid))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.messageDeletedConversationSid(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.messageDeletedConversationSid(
             conversationSid,
             messageData: Mapper.messageToPigeon(message, conversationSid: conversationSid),
             completion: { (error: Error?) in
@@ -69,7 +69,7 @@ public class ConversationListener: NSObject, TCHConversationDelegate {
         conversation: TCHConversation,
         participantJoined participant: TCHParticipant) {
         debug("onParticipantAdded => participantSid = \(String(describing: participant.sid))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.participantAddedConversationSid(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.participantAddedConversationSid(
             conversationSid,
             participantData: Mapper.participantToPigeon(participant, conversationSid: conversationSid)!,
             completion: { (error: Error?) in
@@ -88,7 +88,7 @@ public class ConversationListener: NSObject, TCHConversationDelegate {
         updated: TCHParticipantUpdate) {
         debug("onParticipantUpdated => participantSid = \(String(describing: participant.sid)), " +
                 "updated = \(String(describing: updated))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.participantUpdatedConversationSid(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.participantUpdatedConversationSid(
             conversationSid,
             participantData: Mapper.participantToPigeon(participant, conversationSid: conversationSid)!,
             reason: Mapper.participantUpdateToString(updated),
@@ -106,7 +106,7 @@ public class ConversationListener: NSObject, TCHConversationDelegate {
         conversation: TCHConversation,
         participantLeft participant: TCHParticipant) {
         debug("onParticipantDeleted => participantSid = \(String(describing: participant.sid))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.participantDeletedConversationSid(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.participantDeletedConversationSid(
             conversationSid,
             participantData: Mapper.participantToPigeon(participant, conversationSid: conversationSid)!,
             completion: { (error: Error?) in
@@ -124,7 +124,7 @@ public class ConversationListener: NSObject, TCHConversationDelegate {
         participant: TCHParticipant) {
         debug("onTypingStarted => conversationSid = \(String(describing: conversation.sid)), " +
                 "participantSid = \(String(describing: participant.sid))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.typingStartedConversationSid(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.typingStartedConversationSid(
             conversationSid,
             conversationData: Mapper.conversationToPigeon(conversation)!,
             participantData: Mapper.participantToPigeon(participant, conversationSid: conversationSid)!,
@@ -143,7 +143,7 @@ public class ConversationListener: NSObject, TCHConversationDelegate {
         participant: TCHParticipant) {
         debug("onTypingEnded => conversationSid = \(String(describing: conversation.sid)), " +
                 "participantSid = \(String(describing: participant.sid))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.typingEndedConversationSid(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.typingEndedConversationSid(
             conversationSid,
             conversationData: Mapper.conversationToPigeon(conversation)!,
             participantData: Mapper.participantToPigeon(participant, conversationSid: conversationSid)!,
@@ -163,7 +163,7 @@ public class ConversationListener: NSObject, TCHConversationDelegate {
         synchronizationStatusUpdated status: TCHConversationSynchronizationStatus) {
         let syncStatus = Mapper.conversationSynchronizationStatusToString(conversation.synchronizationStatus)
         debug("onSynchronizationChanged => sid: \(String(describing: conversation.sid)), status: \(syncStatus)")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.synchronizationChangedConversationSid(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.synchronizationChangedConversationSid(
             conversationSid,
             conversationData: Mapper.conversationToPigeon(conversation)!,
             completion: { (error: Error?) in
@@ -217,6 +217,6 @@ public class ConversationListener: NSObject, TCHConversationDelegate {
     }
 
     private func debug(_ msg: String) {
-        SwiftTwilioConversationsPlugin.debug("\(TAG)::\(msg)")
+        SwiftTwilioConversationsLinqPlugin.debug("\(TAG)::\(msg)")
     }
 }

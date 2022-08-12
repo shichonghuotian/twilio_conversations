@@ -2,10 +2,10 @@ import Flutter
 import UIKit
 import TwilioConversationsClient
 
-public class SwiftTwilioConversationsPlugin: NSObject, FlutterPlugin {
-    let TAG = "SwiftTwilioConversationsPlugin"
+public class SwiftTwilioConversationsLinqPlugin: NSObject, FlutterPlugin {
+    let TAG = "SwiftTwilioConversationsLinqPlugin"
 
-    public static var instance: SwiftTwilioConversationsPlugin?
+    public static var instance: SwiftTwilioConversationsLinqPlugin?
 
     // Flutter > Host APIs
     static let pluginApi: PluginMethods = PluginMethods()
@@ -31,9 +31,9 @@ public class SwiftTwilioConversationsPlugin: NSObject, FlutterPlugin {
     public static var nativeDebug = false
 
     public static func debug(_ msg: String) {
-        if SwiftTwilioConversationsPlugin.nativeDebug {
+        if SwiftTwilioConversationsLinqPlugin.nativeDebug {
             NSLog(msg)
-            guard let loggingApi = SwiftTwilioConversationsPlugin.flutterLoggingApi else {
+            guard let loggingApi = SwiftTwilioConversationsLinqPlugin.flutterLoggingApi else {
                 return
             }
             loggingApi.log(fromHostMsg: msg) { (error: Error?) in
@@ -45,24 +45,24 @@ public class SwiftTwilioConversationsPlugin: NSObject, FlutterPlugin {
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        instance = SwiftTwilioConversationsPlugin()
+        instance = SwiftTwilioConversationsLinqPlugin()
         instance?.onRegister(registrar)
     }
 
     public func onRegister(_ registrar: FlutterPluginRegistrar) {
-        SwiftTwilioConversationsPlugin.messenger = registrar.messenger()
+        SwiftTwilioConversationsLinqPlugin.messenger = registrar.messenger()
 
-        SwiftTwilioConversationsPlugin.flutterClientApi =
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi =
             TWCONFlutterConversationClientApi(binaryMessenger: registrar.messenger())
-        SwiftTwilioConversationsPlugin.flutterLoggingApi =
+        SwiftTwilioConversationsLinqPlugin.flutterLoggingApi =
             TWCONFlutterLoggingApi(binaryMessenger: registrar.messenger())
 
-        TWCONPluginApiSetup(registrar.messenger(), SwiftTwilioConversationsPlugin.pluginApi)
-        TWCONConversationClientApiSetup(registrar.messenger(), SwiftTwilioConversationsPlugin.conversationClientApi)
-        TWCONConversationApiSetup(registrar.messenger(), SwiftTwilioConversationsPlugin.conversationApi)
-        TWCONParticipantApiSetup(registrar.messenger(), SwiftTwilioConversationsPlugin.participantApi)
-        TWCONMessageApiSetup(registrar.messenger(), SwiftTwilioConversationsPlugin.messageApi)
-        TWCONUserApiSetup(registrar.messenger(), SwiftTwilioConversationsPlugin.userApi)
+        TWCONPluginApiSetup(registrar.messenger(), SwiftTwilioConversationsLinqPlugin.pluginApi)
+        TWCONConversationClientApiSetup(registrar.messenger(), SwiftTwilioConversationsLinqPlugin.conversationClientApi)
+        TWCONConversationApiSetup(registrar.messenger(), SwiftTwilioConversationsLinqPlugin.conversationApi)
+        TWCONParticipantApiSetup(registrar.messenger(), SwiftTwilioConversationsLinqPlugin.participantApi)
+        TWCONMessageApiSetup(registrar.messenger(), SwiftTwilioConversationsLinqPlugin.messageApi)
+        TWCONUserApiSetup(registrar.messenger(), SwiftTwilioConversationsLinqPlugin.userApi)
 
         registrar.addApplicationDelegate(self)
     }
@@ -72,13 +72,13 @@ public class SwiftTwilioConversationsPlugin: NSObject, FlutterPlugin {
         _ application: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         debug("didRegisterForRemoteNotificationsWithDeviceToken => onSuccess: \((deviceToken as NSData).description)")
-        if let reason = SwiftTwilioConversationsPlugin.reasonForTokenRetrieval {
+        if let reason = SwiftTwilioConversationsLinqPlugin.reasonForTokenRetrieval {
             if reason == "register" {
                 client?.register(withNotificationToken: deviceToken, completion: { (result: TCHResult) in
                     self.debug("didRegisterForRemoteNotificationsWithDeviceToken => "
                                + "registered for notifications: \(result.isSuccessful)")
                     if result.isSuccessful {
-                        SwiftTwilioConversationsPlugin.flutterClientApi?.registered(
+                        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.registered(
                             completion: { (error: Error?) in
                                 if let errorMessage = error {
                                     self.debug("didRegisterForRemoteNotificationsWithDeviceToken => "
@@ -86,7 +86,7 @@ public class SwiftTwilioConversationsPlugin: NSObject, FlutterPlugin {
                                 }
                         })
                     } else if let error = result.error {
-                        SwiftTwilioConversationsPlugin.flutterClientApi?.registrationFailedErrorInfoData(
+                        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.registrationFailedErrorInfoData(
                             Mapper.errorToPigeon(error), completion: { (error: Error?) in
                                 if let errorMessage = error {
                                     self.debug("didRegisterForRemoteNotificationsWithDeviceToken => "
@@ -97,7 +97,7 @@ public class SwiftTwilioConversationsPlugin: NSObject, FlutterPlugin {
                         let error = TWCONErrorInfoData()
                         error.code = 0
                         error.message = "Unknown error during registration."
-                        SwiftTwilioConversationsPlugin.flutterClientApi?.registrationFailedErrorInfoData(
+                        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.registrationFailedErrorInfoData(
                             error, completion: { (error: Error?) in
                                 if let errorMessage = error {
                                     self.debug("didRegisterForRemoteNotificationsWithDeviceToken => "
@@ -111,14 +111,14 @@ public class SwiftTwilioConversationsPlugin: NSObject, FlutterPlugin {
                     self.debug("didRegisterForRemoteNotificationsWithDeviceToken => "
                           + "deregistered for notifications: \(result.isSuccessful)")
                     if result.isSuccessful {
-                        SwiftTwilioConversationsPlugin.flutterClientApi?.deregistered(completion: { (error: Error?) in
+                        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.deregistered(completion: { (error: Error?) in
                             if let errorMessage = error {
                                 self.debug("didRegisterForRemoteNotificationsWithDeviceToken => "
                                         + "Error calling FlutterClientApi: \(errorMessage)")
                             }
                         })
                     } else if let error = result.error {
-                        SwiftTwilioConversationsPlugin.flutterClientApi?.deregistrationFailedErrorInfoData(
+                        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.deregistrationFailedErrorInfoData(
                             Mapper.errorToPigeon(error), completion: { (error: Error?) in
                                 if let errorMessage = error {
                                     self.debug("didRegisterForRemoteNotificationsWithDeviceToken => "
@@ -129,7 +129,7 @@ public class SwiftTwilioConversationsPlugin: NSObject, FlutterPlugin {
                         let error = TWCONErrorInfoData()
                         error.code = 0
                         error.message = "Unknown error during deregistration."
-                        SwiftTwilioConversationsPlugin.flutterClientApi?.deregistrationFailedErrorInfoData(
+                        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.deregistrationFailedErrorInfoData(
                             error, completion: { (error: Error?) in
                                 if let errorMessage = error {
                                     self.debug("didRegisterForRemoteNotificationsWithDeviceToken => "
@@ -150,7 +150,7 @@ public class SwiftTwilioConversationsPlugin: NSObject, FlutterPlugin {
         let exception = TWCONErrorInfoData()
         exception.code = NSNumber(value: error.code)
         exception.message = error.localizedDescription
-        SwiftTwilioConversationsPlugin.flutterClientApi?.registrationFailedErrorInfoData(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.registrationFailedErrorInfoData(
             exception, completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("didFailToRegisterForRemoteNotificationsWithError => "
@@ -160,6 +160,6 @@ public class SwiftTwilioConversationsPlugin: NSObject, FlutterPlugin {
     }
 
     private func debug(_ msg: String) {
-        SwiftTwilioConversationsPlugin.debug("\(TAG)::\(msg)")
+        SwiftTwilioConversationsLinqPlugin.debug("\(TAG)::\(msg)")
     }
 }

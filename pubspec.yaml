@@ -1,6 +1,6 @@
 name: twilio_conversations_linq
 description: twilio conversations flutter sdk
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/shichonghuotian/twilio_conversations
 
 environment:
@@ -40,7 +40,7 @@ flutter:
         package: com.linq.twilio.conversations.twilio_conversations
         pluginClass: TwilioConversationsPlugin
       ios:
-        pluginClass: TwilioConversationsPlugin
+        pluginClass: TwilioConversationsLinqPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

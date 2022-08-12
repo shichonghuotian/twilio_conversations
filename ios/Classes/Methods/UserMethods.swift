@@ -11,7 +11,7 @@ class UserMethods: NSObject, TWCONUserApi {
         friendlyName: String?,
         completion: @escaping (FlutterError?) -> Void) {
         debug("setFriendlyName => identity: \(String(describing: identity))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 FlutterError(
                     code: "ClientNotInitializedException",
@@ -70,7 +70,7 @@ class UserMethods: NSObject, TWCONUserApi {
         attributes: TWCONAttributesData?,
         completion: @escaping (FlutterError?) -> Void) {
         debug("setAttributes => identity: \(String(describing: identity))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 FlutterError(
                     code: "ClientNotInitializedException",
@@ -143,6 +143,6 @@ class UserMethods: NSObject, TWCONUserApi {
     }
 
     private func debug(_ msg: String) {
-        SwiftTwilioConversationsPlugin.debug("\(TAG)::\(msg)")
+        SwiftTwilioConversationsLinqPlugin.debug("\(TAG)::\(msg)")
     }
 }

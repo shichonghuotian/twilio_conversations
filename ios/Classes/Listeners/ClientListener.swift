@@ -8,7 +8,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
         _ client: TwilioConversationsClient,
         notificationAddedToConversationWithSid conversationSid: String) {
         debug("onAddedToConversationNotification => conversationSid is \(conversationSid)'")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.added(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.added(
             toConversationNotificationConversationSid: conversationSid, completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onAddedToConversationNotification => "
@@ -22,7 +22,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
         _ client: TwilioConversationsClient,
         synchronizationStatusUpdated status: TCHClientSynchronizationStatus) {
         debug("onClientSynchronization => state is \(Mapper.clientSynchronizationStatusToString(status))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.clientSynchronizationSynchronizationStatus(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.clientSynchronizationSynchronizationStatus(
             Mapper.clientSynchronizationStatusToString(status), completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onClientSynchronization => "
@@ -36,7 +36,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
         _ client: TwilioConversationsClient,
         connectionStateUpdated state: TCHClientConnectionState) {
         debug("onConnectionStateChange => state is \(Mapper.clientConnectionStateToString(state))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.connectionStateChangeConnectionState(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.connectionStateChangeConnectionState(
             Mapper.clientConnectionStateToString(state), completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onConnectionStateChange => "
@@ -50,7 +50,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
         _ client: TwilioConversationsClient,
         conversationAdded conversation: TCHConversation) {
         debug("onConversationAdded => conversation \(String(describing: conversation.sid))'")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.conversationAddedConversationData(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.conversationAddedConversationData(
             Mapper.conversationToPigeon(conversation)!, completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onConversationAdded => "
@@ -64,7 +64,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
         _ client: TwilioConversationsClient,
         conversationDeleted conversation: TCHConversation) {
         debug("onConversationDeleted => conversation \(String(describing: conversation.sid))'")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.conversationDeletedConversationData(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.conversationDeletedConversationData(
             Mapper.conversationToPigeon(conversation)!, completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onConversationDeleted => "
@@ -80,7 +80,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
         synchronizationStatusUpdated status: TCHConversationSynchronizationStatus) {
         debug("onConversationSynchronizationChange => conversationSid is '\(String(describing: conversation.sid))', "
               + "syncStatus: \(Mapper.conversationSynchronizationStatusToString(conversation.synchronizationStatus))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.conversationSynchronizationChange(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.conversationSynchronizationChange(
             Mapper.conversationToPigeon(conversation)!, completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onConversationSynchronizationChange => "
@@ -101,7 +101,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
         event.conversation = Mapper.conversationToPigeon(conversation)
         event.reason = Mapper.conversationUpdateToString(updated)
 
-        SwiftTwilioConversationsPlugin.flutterClientApi?.conversationUpdatedEvent(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.conversationUpdatedEvent(
             event,
             completion: { (error: Error?) in
                 if let errorMessage = error {
@@ -114,7 +114,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
     // onError
     public func conversationsClient(_ client: TwilioConversationsClient, errorReceived error: TCHError) {
         debug("onError")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.errorErrorInfoData(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.errorErrorInfoData(
             Mapper.errorToPigeon(error), completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onError => "
@@ -129,7 +129,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
         notificationNewMessageReceivedForConversationSid conversationSid: String,
         messageIndex: UInt) {
         debug("onNewMessageNotification => conversationSid: \(conversationSid), messageIndex: \(messageIndex)")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.newMessageNotificationConversationSid(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.newMessageNotificationConversationSid(
             conversationSid,
             messageIndex: NSNumber(value: messageIndex),
             completion: { (error: Error?) in
@@ -145,7 +145,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
         _ client: TwilioConversationsClient,
         notificationRemovedFromConversationWithSid conversationSid: String) {
         debug("onRemovedFromConversationNotification => conversationSid: \(conversationSid)")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.removed(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.removed(
             fromConversationNotificationConversationSid: conversationSid,
             completion: { (error: Error?) in
                 if let errorMessage = error {
@@ -158,7 +158,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
     // onTokenExpired
     public func conversationsClientTokenExpired(_ client: TwilioConversationsClient) {
         debug("onTokenExpired")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.tokenExpired(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.tokenExpired(
             completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onTokenExpired => "
@@ -170,7 +170,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
     // onTokenAboutToExpire
     public func conversationsClientTokenWillExpire(_ client: TwilioConversationsClient) {
         debug("onTokenAboutToExpire")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.tokenAboutToExpire(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.tokenAboutToExpire(
             completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onTokenAboutToExpire => "
@@ -182,7 +182,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
     // onUserSubscribed
     public func conversationsClient(_ client: TwilioConversationsClient, userSubscribed user: TCHUser) {
         debug("onUserSubscribed => user '\(String(describing: user.identity))'")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.userSubscribedUserData(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.userSubscribedUserData(
             Mapper.userToPigeon(user)!, completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onUserSubscribed => "
@@ -194,7 +194,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
     // onUserUnsubscribed
     public func conversationsClient(_ client: TwilioConversationsClient, userUnsubscribed user: TCHUser) {
         debug("onUserUnsubscribed => user '\(String(describing: user.identity))'")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.userUnsubscribedUserData(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.userUnsubscribedUserData(
             Mapper.userToPigeon(user)!, completion: { (error: Error?) in
                 if let errorMessage = error {
                     self.debug("onUserUnsubscribed => "
@@ -207,7 +207,7 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
     public func conversationsClient(_ client: TwilioConversationsClient, user: TCHUser, updated: TCHUserUpdate) {
         debug("onUserUpdated => user \(String(describing: user.identity)) "
               + "updated, \(Mapper.userUpdateToString(updated))")
-        SwiftTwilioConversationsPlugin.flutterClientApi?.userUpdatedUserData(
+        SwiftTwilioConversationsLinqPlugin.flutterClientApi?.userUpdatedUserData(
             Mapper.userToPigeon(user)!,
             reason: Mapper.userUpdateToString(updated),
             completion: { (error: Error?) in
@@ -219,6 +219,6 @@ public class ClientListener: NSObject, TwilioConversationsClientDelegate {
     }
 
     private func debug(_ msg: String) {
-        SwiftTwilioConversationsPlugin.debug("\(TAG)::\(msg)")
+        SwiftTwilioConversationsLinqPlugin.debug("\(TAG)::\(msg)")
     }
 }

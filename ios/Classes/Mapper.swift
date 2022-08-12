@@ -28,10 +28,10 @@ public class Mapper {
             return nil
         }
 
-        if !SwiftTwilioConversationsPlugin.conversationListeners.keys.contains(sid) {
+        if !SwiftTwilioConversationsLinqPlugin.conversationListeners.keys.contains(sid) {
             debug("setupConversationListener => conversation: \(String(describing: conversation.sid))")
-            SwiftTwilioConversationsPlugin.conversationListeners[sid] = ConversationListener(sid)
-            conversation.delegate = SwiftTwilioConversationsPlugin.conversationListeners[sid]
+            SwiftTwilioConversationsLinqPlugin.conversationListeners[sid] = ConversationListener(sid)
+            conversation.delegate = SwiftTwilioConversationsLinqPlugin.conversationListeners[sid]
         }
 
         let result = TWCONConversationData()
@@ -413,7 +413,7 @@ public class Mapper {
     }
 
     private static func debug(_ msg: String) {
-        SwiftTwilioConversationsPlugin.debug("\(TAG)::\(msg)")
+        SwiftTwilioConversationsLinqPlugin.debug("\(TAG)::\(msg)")
     }
 }
 

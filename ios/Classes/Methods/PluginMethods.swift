@@ -8,7 +8,7 @@ class PluginMethods: NSObject, TWCONPluginApi {
         _ enableNative: NSNumber,
         enableSdk: NSNumber,
         error: AutoreleasingUnsafeMutablePointer<FlutterError?>) {
-        SwiftTwilioConversationsPlugin.nativeDebug = enableNative.boolValue
+        SwiftTwilioConversationsLinqPlugin.nativeDebug = enableNative.boolValue
         if enableSdk.boolValue {
             TwilioConversationsClient.setLogLevel(TCHLogLevel.debug)
         } else {
@@ -43,18 +43,18 @@ class PluginMethods: NSObject, TWCONPluginApi {
         let clientProperties = TwilioConversationsClientProperties()
         clientProperties.region = properties.region ?? "us1"
 
-        SwiftTwilioConversationsPlugin.clientListener = ClientListener()
+        SwiftTwilioConversationsLinqPlugin.clientListener = ClientListener()
 
         TwilioConversationsClient.conversationsClient(
             withToken: jwtToken,
             properties: clientProperties,
-            delegate: SwiftTwilioConversationsPlugin.clientListener,
+            delegate: SwiftTwilioConversationsLinqPlugin.clientListener,
             completion: { (result: TCHResult, conversationsClient: TwilioConversationsClient?) in
                 if result.isSuccessful {
                     let myIdentity = conversationsClient?.user?.identity ?? "unknown"
                     self.debug("create => onSuccess - myIdentity: '\(myIdentity)'")
-                    conversationsClient?.delegate = SwiftTwilioConversationsPlugin.clientListener
-                    SwiftTwilioConversationsPlugin.instance?.client = conversationsClient
+                    conversationsClient?.delegate = SwiftTwilioConversationsLinqPlugin.clientListener
+                    SwiftTwilioConversationsLinqPlugin.instance?.client = conversationsClient
                     let clientData = Mapper.conversationsClientToPigeon(conversationsClient)
                     completion(clientData, nil)
                 } else {
@@ -71,6 +71,6 @@ class PluginMethods: NSObject, TWCONPluginApi {
     }
 
     private func debug(_ msg: String) {
-        SwiftTwilioConversationsPlugin.debug("\(TAG)::\(msg)")
+        SwiftTwilioConversationsLinqPlugin.debug("\(TAG)::\(msg)")
     }
 }

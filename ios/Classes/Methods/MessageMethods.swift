@@ -12,7 +12,7 @@ class MessageMethods: NSObject, TWCONMessageApi {
         completion: @escaping (String?, FlutterError?) -> Void) {
         debug("getMediaContentTemporaryUrl => conversationSid: \(String(describing: conversationSid)), "
                 + "messageIndex: \(String(describing: messageIndex))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 nil,
                 FlutterError(
@@ -111,7 +111,7 @@ class MessageMethods: NSObject, TWCONMessageApi {
         completion: @escaping (TWCONParticipantData?, FlutterError?) -> Void) {
         debug("getParticipant => conversationSid: \(String(describing: conversationSid)), "
                 + "messageIndex: \(String(describing: messageIndex))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 nil,
                 FlutterError(
@@ -188,7 +188,7 @@ class MessageMethods: NSObject, TWCONMessageApi {
         completion: @escaping (FlutterError?) -> Void) {
         debug("setAttributes => conversationSid: \(String(describing: conversationSid)), "
                 + "messageIndex: \(String(describing: messageIndex))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 FlutterError(
                     code: "ClientNotInitializedException",
@@ -292,7 +292,7 @@ class MessageMethods: NSObject, TWCONMessageApi {
         completion: @escaping (FlutterError?) -> Void) {
         debug("updateMessageBody => conversationSid: \(String(describing: conversationSid)), "
                 + "messageIndex: \(String(describing: messageIndex))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 FlutterError(
                     code: "ClientNotInitializedException",
@@ -367,6 +367,6 @@ class MessageMethods: NSObject, TWCONMessageApi {
     }
 
     private func debug(_ msg: String) {
-        SwiftTwilioConversationsPlugin.debug("\(TAG)::\(msg)")
+        SwiftTwilioConversationsLinqPlugin.debug("\(TAG)::\(msg)")
     }
 }

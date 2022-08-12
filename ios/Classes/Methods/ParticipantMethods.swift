@@ -10,7 +10,7 @@ class ParticipantMethods: NSObject, TWCONParticipantApi {
         participantSid: String?,
         completion: @escaping (TWCONUserData?, FlutterError?) -> Void) {
         debug("getUser => conversationSid: \(String(describing: conversationSid))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 nil,
                 FlutterError(
@@ -82,7 +82,7 @@ class ParticipantMethods: NSObject, TWCONParticipantApi {
         attributes: TWCONAttributesData?,
         completion: @escaping (FlutterError?) -> Void) {
         debug("setAttributes => conversationSid: \(String(describing: conversationSid))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 FlutterError(
                     code: "ClientNotInitializedException",
@@ -180,7 +180,7 @@ class ParticipantMethods: NSObject, TWCONParticipantApi {
         completion: @escaping (FlutterError?) -> Void) {
         debug("remove => conversationSid: \(String(describing: conversationSid)), "
             + "participantSid: \(String(describing: participantSid))")
-        guard let client = SwiftTwilioConversationsPlugin.instance?.client else {
+        guard let client = SwiftTwilioConversationsLinqPlugin.instance?.client else {
             return completion(
                 FlutterError(
                     code: "ClientNotInitializedException",
@@ -244,6 +244,6 @@ class ParticipantMethods: NSObject, TWCONParticipantApi {
     }
 
     private func debug(_ msg: String) {
-        SwiftTwilioConversationsPlugin.debug("\(TAG)::\(msg)")
+        SwiftTwilioConversationsLinqPlugin.debug("\(TAG)::\(msg)")
     }
 }
