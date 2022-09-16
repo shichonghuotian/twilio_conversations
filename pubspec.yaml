@@ -1,6 +1,6 @@
 name: twilio_conversations_linq
 description: twilio conversations flutter sdk
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/shichonghuotian/twilio_conversations
 
 environment:

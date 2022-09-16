@@ -64,6 +64,8 @@ object Mapper {
             TwilioConversationsPlugin.conversationListeners[conversation.sid] = ConversationListener(conversation.sid)
             conversation.addListener(TwilioConversationsPlugin.conversationListeners[conversation.sid])
         }
+        conversation.addListener(TwilioConversationsPlugin.conversationListeners[conversation.sid])
+
 
         val result = Api.ConversationData()
         result.createdBy = conversation.createdBy
