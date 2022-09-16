@@ -33,8 +33,10 @@ public class Mapper {
             SwiftTwilioConversationsLinqPlugin.conversationListeners[sid] = ConversationListener(sid)
             conversation.delegate = SwiftTwilioConversationsLinqPlugin.conversationListeners[sid]
         }
-
-        conversation.delegate = SwiftTwilioConversationsLinqPlugin.conversationListeners[sid]
+//         fix bug
+        if conversation.delegate == nil {
+             conversation.delegate = SwiftTwilioConversationsLinqPlugin.conversationListeners[sid]
+        }
 
         let result = TWCONConversationData()
         result.attributes = attributesToPigeon(conversation.attributes())

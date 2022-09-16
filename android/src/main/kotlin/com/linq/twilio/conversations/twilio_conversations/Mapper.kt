@@ -64,6 +64,9 @@ object Mapper {
             TwilioConversationsPlugin.conversationListeners[conversation.sid] = ConversationListener(conversation.sid)
             conversation.addListener(TwilioConversationsPlugin.conversationListeners[conversation.sid])
         }
+//        fix bug
+        conversation.removeListener(TwilioConversationsPlugin.conversationListeners[conversation
+            .sid])
         conversation.addListener(TwilioConversationsPlugin.conversationListeners[conversation.sid])
 
 
