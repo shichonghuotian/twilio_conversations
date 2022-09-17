@@ -65,9 +65,11 @@ object Mapper {
             conversation.addListener(TwilioConversationsPlugin.conversationListeners[conversation.sid])
         }
 //        fix bug
-        conversation.removeListener(TwilioConversationsPlugin.conversationListeners[conversation
-            .sid])
-        conversation.addListener(TwilioConversationsPlugin.conversationListeners[conversation.sid])
+        if (conversation.sid != null && TwilioConversationsPlugin.conversationListeners.containsKey
+            (conversation.sid)) {
+            conversation.removeAllListeners()
+            conversation.addListener(TwilioConversationsPlugin.conversationListeners[conversation.sid])
+        }
 
 
         val result = Api.ConversationData()
