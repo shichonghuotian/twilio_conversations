@@ -29,13 +29,14 @@ class ChatPluginService {
   * */
   connect() async {
     print("ChatPluginManager init");
+    await TwilioConversations.debug(dart: true, native: true,sdk: false);
 
     if(TwilioConversations.conversationClient != null) {
       return;
     }
 
     try {
-       plugin.create(jwtToken: getToken());
+       await plugin.create(jwtToken: getToken());
 
     } on PlatformException catch(e) {
 
@@ -84,7 +85,7 @@ class ChatPluginService {
 
     //usr 00
     // String jwtToken = 'eyJjdHkiOiJ0d2lsaW8tZnBhO3Y9MSIsInR5cCI6IkpXVCIsImFsZyI6IkhTMjU2In0.eyJpc3MiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2IiwiZXhwIjoxNjU5MDIwMjEzLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ1c3IwMCIsImNoYXQiOnsic2VydmljZV9zaWQiOiJJU2M3Mzg5MTgyNDc4NjQzZDBhOGE2MjU5ODI5NDNjNjYzIn19LCJqdGkiOiJTSzI4YWM4ZTE5NWVmMjBlZTc5OGQzZDA1YmNlN2QwMWU2LTE2NTg5MzM4ODgiLCJzdWIiOiJBQzgyN2Q0ZWJiZjgzZjYzNTkwNzQzMWU5MDk0MmI1YjQ0In0.x_NDOxNfHYhLLpOVnTw0j-jcjgOFhyjLtAnPKqHoYgI';
-    String jwtToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2I2NGUxZTJiNzE0NDViOWE3ZGRiMTlmY2ZmOTNiZDU2LTE2NjAxMjk0NjQiLCJncmFudHMiOnsiY2hhdCI6eyJzZXJ2aWNlX3NpZCI6IklTYWUzMDQzYjhmNTI0NGM3YmI0NmUxMGY4Y2U4ZDVkYWEifSwiaWRlbnRpdHkiOjl9LCJpc3MiOiJTS2I2NGUxZTJiNzE0NDViOWE3ZGRiMTlmY2ZmOTNiZDU2IiwiZXhwIjoxNjYwMjE1ODY0LCJuYmYiOjE2NjAxMjk0NjQsInN1YiI6IkFDOTk2MWYzMmVhODFmNWE2ZmZkNzA0YmFlODYyN2QzNzIifQ.gMkzCIdbHwaZ0-_nU9QfKkqvYk0tz9xUZTQHpH1I8d4';
+    String jwtToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2I2NGUxZTJiNzE0NDViOWE3ZGRiMTlmY2ZmOTNiZDU2LTE2NjM1ODE1NjAiLCJncmFudHMiOnsiY2hhdCI6eyJzZXJ2aWNlX3NpZCI6IklTYWUzMDQzYjhmNTI0NGM3YmI0NmUxMGY4Y2U4ZDVkYWEiLCJwdXNoX2NyZWRlbnRpYWxfc2lkIjoiQ1IwMzQ4OTVlNTBlZDAzMDllZmYxNWU2MTFlMGJjMTFkMyJ9LCJpZGVudGl0eSI6MTF9LCJpc3MiOiJTS2I2NGUxZTJiNzE0NDViOWE3ZGRiMTlmY2ZmOTNiZDU2IiwiZXhwIjoxNjYzNjY3OTYwLCJuYmYiOjE2NjM1ODE1NjAsInN1YiI6IkFDOTk2MWYzMmVhODFmNWE2ZmZkNzA0YmFlODYyN2QzNzIifQ.NH4kmhnX6aUwiAgm6aKEoVKhKamDfXpRhellFqSnblk';
 
     return jwtToken;
   }

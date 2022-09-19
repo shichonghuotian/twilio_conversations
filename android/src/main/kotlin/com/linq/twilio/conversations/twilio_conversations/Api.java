@@ -2781,6 +2781,7 @@ public class Api {
     private FlutterConversationClientApiCodec() {}
     @Override
     protected Object readValueOfType(byte type, ByteBuffer buffer) {
+
       switch (type) {
         case (byte)128:         
           return AttributesData.fromMap((Map<String, Object>) readValue(buffer));
@@ -2870,6 +2871,9 @@ public class Api {
     }
     @Override
     protected void writeValue(ByteArrayOutputStream stream, Object value)     {
+
+//      TwilioConversationsPlugin.debug("FlutterConversationClientApiCodec: write: " + value.getClass());
+
       if (value instanceof AttributesData) {
         stream.write(128);
         writeValue(stream, ((AttributesData) value).toMap());
@@ -3002,6 +3006,8 @@ public class Api {
           new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.FlutterConversationClientApi.error", getCodec());
       channel.send(new ArrayList<Object>(Arrays.asList(errorInfoDataArg)), channelReply -> {
         callback.reply(null);
+
+
       });
     }
     public void conversationAdded(ConversationData conversationDataArg, Reply<Void> callback) {
@@ -3145,11 +3151,19 @@ public class Api {
       });
     }
     public void messageAdded(String conversationSidArg, MessageData messageDataArg, Reply<Void> callback) {
+      TwilioConversationsPlugin.debug("channel::messageAdded: " + getCodec() + " ; " + binaryMessenger);
+
       BasicMessageChannel<Object> channel =
           new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.FlutterConversationClientApi.messageAdded", getCodec());
       channel.send(new ArrayList<Object>(Arrays.asList(conversationSidArg, messageDataArg)), channelReply -> {
+
+        TwilioConversationsPlugin.debug("channel::messageAdded => send " + channelReply);
+
         callback.reply(null);
       });
+
+      TwilioConversationsPlugin.debug("channel::messageAdded end");
+
     }
     public void messageUpdated(String conversationSidArg, MessageData messageDataArg, String reasonArg, Reply<Void> callback) {
       BasicMessageChannel<Object> channel =

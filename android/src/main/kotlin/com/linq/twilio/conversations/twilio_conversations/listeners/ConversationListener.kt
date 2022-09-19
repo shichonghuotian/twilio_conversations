@@ -11,10 +11,17 @@ class ConversationListener(private val conversationSid: String) : ConversationLi
     private val TAG = "ConversationListener"
 
     override fun onMessageAdded(message: Message) {
-        debug("onMessageAdded => messageSid = ${message.sid}")
+        debug("onMessageAdded => messageSid = ${message.sid}, ${TwilioConversationsPlugin.flutterClientApi}")
+
         TwilioConversationsPlugin.flutterClientApi.messageAdded(
             conversationSid,
-            Mapper.messageToPigeon(message)) {}
+            Mapper.messageToPigeon(message)) {
+
+            debug("onMessageAdded => end messageSid = ${message.sid}")
+
+        }
+
+
     }
 
     override fun onMessageUpdated(message: Message, reason: Message.UpdateReason) {

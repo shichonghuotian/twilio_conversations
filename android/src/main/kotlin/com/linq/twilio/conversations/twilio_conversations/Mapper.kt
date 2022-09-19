@@ -64,12 +64,6 @@ object Mapper {
             TwilioConversationsPlugin.conversationListeners[conversation.sid] = ConversationListener(conversation.sid)
             conversation.addListener(TwilioConversationsPlugin.conversationListeners[conversation.sid])
         }
-//        fix bug
-        if (conversation.sid != null && TwilioConversationsPlugin.conversationListeners.containsKey
-            (conversation.sid)) {
-            conversation.removeAllListeners()
-            conversation.addListener(TwilioConversationsPlugin.conversationListeners[conversation.sid])
-        }
 
 
         val result = Api.ConversationData()

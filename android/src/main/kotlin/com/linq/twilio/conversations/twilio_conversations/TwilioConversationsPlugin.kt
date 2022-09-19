@@ -60,6 +60,8 @@ class TwilioConversationsPlugin : FlutterPlugin {
         var nativeDebug: Boolean = false
         val LOG_TAG = "Twilio_Conversations"
 
+        var isInited: Boolean = false;
+
         @JvmStatic
         fun debug(msg: String) {
             if (nativeDebug) {
@@ -72,6 +74,12 @@ class TwilioConversationsPlugin : FlutterPlugin {
     }
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+
+        if(isInited) {
+//            防止多次初始化， fcm会启动一个FlutterEngine
+            return
+        }
+
         instance = this
         messenger = flutterPluginBinding.binaryMessenger
         applicationContext = flutterPluginBinding.applicationContext
@@ -85,6 +93,9 @@ class TwilioConversationsPlugin : FlutterPlugin {
 
         flutterClientApi = Api.FlutterConversationClientApi(flutterPluginBinding.binaryMessenger)
         flutterLoggingApi = Api.FlutterLoggingApi(flutterPluginBinding.binaryMessenger)
+
+        debug( "onAttachedToEngine")
+        isInited = true
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {

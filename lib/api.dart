@@ -2572,13 +2572,17 @@ abstract class FlutterConversationClientApi {
       }
     }
     {
-      const BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+            const BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
           'dev.flutter.pigeon.FlutterConversationClientApi.messageAdded',
           codec);
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
+        print("FlutterConversationClientApi.messageAdded: "
+            "register");
+
         channel.setMessageHandler((Object? message) async {
+          print("FlutterConversationClientApi.messageAdded: $message");
           assert(message != null,
               'Argument for dev.flutter.pigeon.FlutterConversationClientApi.messageAdded was null.');
           final List<Object?> args = (message as List<Object?>?)!;

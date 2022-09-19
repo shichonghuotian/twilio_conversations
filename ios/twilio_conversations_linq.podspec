@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'twilio_conversations_linq'
-  s.version          = '0.0.7'
+  s.version          = '0.0.8'
   s.summary          = 'twilio conversations flutter sdk'
   s.description      = <<-DESC
 twilio conversations flutter sdk
