@@ -239,10 +239,14 @@ class ConversationMethods: NSObject, TWCONConversationApi {
                 
                 builder.setBody(options.body)
                 
-                if let input = options.inputPath {
+                if let attr = options.attributes, let attrData = try? Mapper.pigeonToAttributes(attr){
                     
-                    
+                    builder.setAttributes(attrData, error: nil);
 
+                }
+                
+                if let input = options.inputPath {
+                
                     if let mimeType = options.mimeType,let inputStream = InputStream(fileAtPath: input) {
                     
      
