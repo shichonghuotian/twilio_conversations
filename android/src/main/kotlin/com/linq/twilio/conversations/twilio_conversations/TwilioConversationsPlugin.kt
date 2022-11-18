@@ -11,9 +11,11 @@ import io.flutter.plugin.common.BinaryMessenger
 import com.linq.twilio.conversations.twilio_conversations.listeners.ClientListener
 import com.linq.twilio.conversations.twilio_conversations.listeners.ConversationListener
 import com.linq.twilio.conversations.twilio_conversations.methods.*
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 
 /** TwilioConversationsPlugin */
-class TwilioConversationsPlugin : FlutterPlugin {
+class TwilioConversationsPlugin : FlutterPlugin, ActivityAware {
     companion object {
         @Suppress("unused")
         @JvmStatic
@@ -48,7 +50,6 @@ class TwilioConversationsPlugin : FlutterPlugin {
         @JvmStatic
         var client: ConversationsClient? = null
 
-        lateinit var messenger: BinaryMessenger
 
         lateinit var applicationContext: Context
 
@@ -73,33 +74,54 @@ class TwilioConversationsPlugin : FlutterPlugin {
         }
     }
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    lateinit var messenger: BinaryMessenger
 
-        if(isInited) {
-//            防止多次初始化， fcm会启动一个FlutterEngine
-            return
-        }
+
+    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        debug("TwilioConversationsPlugin.onAttachedToEngine")
 
         instance = this
         messenger = flutterPluginBinding.binaryMessenger
         applicationContext = flutterPluginBinding.applicationContext
 
-        Api.PluginApi.setup(flutterPluginBinding.binaryMessenger, pluginApi)
-        Api.ConversationClientApi.setup(flutterPluginBinding.binaryMessenger, conversationClientApi)
-        Api.ConversationApi.setup(flutterPluginBinding.binaryMessenger, conversationApi)
-        Api.ParticipantApi.setup(flutterPluginBinding.binaryMessenger, participantApi)
-        Api.MessageApi.setup(flutterPluginBinding.binaryMessenger, messageApi)
-        Api.UserApi.setup(flutterPluginBinding.binaryMessenger, userApi)
+//        isInited = true
+        debug( "TwilioConversations PluginonAttachedToEngine: ${messenger}")
 
-        flutterClientApi = Api.FlutterConversationClientApi(flutterPluginBinding.binaryMessenger)
-        flutterLoggingApi = Api.FlutterLoggingApi(flutterPluginBinding.binaryMessenger)
 
-        debug( "onAttachedToEngine")
-        isInited = true
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         debug("TwilioConversationsPlugin.onDetachedFromEngine")
         isInited = false
     }
+
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        debug( "TwilioConversations onAttachedToActivity: ${messenger}")
+
+        Api.PluginApi.setup(messenger, pluginApi)
+        Api.ConversationClientApi.setup(messenger, conversationClientApi)
+        Api.ConversationApi.setup(messenger, conversationApi)
+        Api.ParticipantApi.setup(messenger, participantApi)
+        Api.MessageApi.setup(messenger, messageApi)
+        Api.UserApi.setup(messenger, userApi)
+
+        flutterClientApi = Api.FlutterConversationClientApi(messenger)
+        flutterLoggingApi = Api.FlutterLoggingApi(messenger)
+
+
+    }
+
+    override fun onDetachedFromActivityForConfigChanges() {
+
+    }
+
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+        onAttachedToActivity(binding)
+    }
+
+    override fun onDetachedFromActivity() {
+
+
+    }
+
 }
