@@ -1,13 +1,16 @@
 import 'dart:math';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:twilio_conversations_example/notification_util.dart';
 import 'package:twilio_conversations_linq/twilio_conversations.dart';
 import 'package:twilio_conversations_example/chat/widget/chat_list.dart';
 import 'package:twilio_conversations_example/conversations/conversations_notifier.dart';
 import 'package:twilio_conversations_example/conversations/conversations_page.dart';
 
 import 'chat/mgr/chat_plugin_service.dart';
+import 'firebase_options.dart';
 import 'messages/messages_page.dart';
 // import 'package:twilio_conversations_linq_example/services/backend_service.dart';
 
@@ -19,6 +22,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // await Firebase.initializeApp();
+  await initFirebase();
   print("start app");
   runApp(MyApp());
 }

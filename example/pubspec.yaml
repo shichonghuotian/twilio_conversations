@@ -36,7 +36,8 @@ dependencies:
   mime_type: ^1.0.0
 #  diff 算法
   diffutil_dart: ^3.0.0
-
+  firebase_messaging: ^13.0.1
+  firebase_core: ^1.22.0
 #  firebase_messaging: ^10.0.8
   image_picker: ^0.8.4+2
 
