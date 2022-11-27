@@ -174,11 +174,10 @@ object Mapper {
             result.conversationSid = message.conversationSid
             result.messageIndex = message.messageIndex
             result.messageSid = message.sid
+
+            return result;
         }
-
-
         return null
-
     }
 
     fun errorInfoToPigeon(errorInfo: ErrorInfo): Api.ErrorInfoData {

@@ -13,3 +13,6 @@
 
 ## 0.0.11
 * : Android的初始化问题修改
+
+## 0.0.12
+* : Android mediasid 无法返回的bug
